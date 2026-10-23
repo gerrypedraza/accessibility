@@ -135,6 +135,10 @@
   /* Agenda: numbered list in two columns when long */
   .slide--agenda ol { columns: 2; column-gap: 3em; font-size: 1.05em; }
   .slide--agenda li { break-inside: avoid; }
+  /* Agenda items can link to their chapter slide (href="#N"): same color as
+     the text; Light Maroon and underlined on hover; no visited color */
+  .slide--agenda a, .slide--agenda a:visited { color: inherit; text-decoration: none; }
+  .slide--agenda a:hover { color: var(--maroon-light); text-decoration: underline; }
 
   /* Text left, image right (and the reverse) */
   .split {
@@ -162,6 +166,24 @@
   .slide--image .full-figure img {
     max-width: 100%; max-height: 92%; object-fit: contain; display: block;
   }
+
+
+  /* Example: a screenshot or graphic with a short description underneath.
+     The description is small (about 12 pt on a standard slide) and sits
+     above the footer. */
+  .slide--example .example-figure {
+    flex: 1; margin: 0; min-height: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slide--example .example-figure img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+    border: 1px solid var(--gray-200);
+  }
+  .slide--example .example-note {
+    font-size: 0.52em; line-height: 1.45; color: var(--muted);
+    margin: 0.9em 0 0; max-width: 62em;
+  }
+  .slide--example .example-note p { margin: 0 0 0.4em; }
 
   /* Full-bleed image with a key phrase */
   .slide--bleed { padding: 0; justify-content: center; align-items: center; }
@@ -554,12 +576,12 @@
   <section class="slide slide--agenda" aria-labelledby="s03">
     <h2 id="s03">Agenda</h2>
     <ol>
-      <li>What Accessibility Is and Why It Matters</li>
-      <li>Standards</li>
-      <li>Structure: What Makes a Document Accessible</li>
-      <li>Why Equations in PDFs Are Harder</li>
-      <li>What Checkers Can and Can't Do</li>
-      <li>Designing for Meaning</li>
+      <li><a href="#4">What Accessibility Is and Why It Matters</a></li>
+      <li><a href="#9">Standards</a></li>
+      <li><a href="#13">Structure: What Makes a Document Accessible</a></li>
+      <li><a href="#15">Why Equations in PDFs Are Harder</a></li>
+      <li><a href="#19">What Checkers Can and Can't Do</a></li>
+      <li><a href="#28">Designing for Meaning</a></li>
     </ol>
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Agenda</span></div>
   </section>
@@ -815,22 +837,36 @@
   </section>
 
   <!-- [26] -->
-  <section class="slide slide--bleed" aria-labelledby="s26">
-    <img class="bleed-image" src="images/background.jpg" alt="">
-    <div class="key-phrase">
-      <h2 id="s26">A checker can tell you it's tagged, not that it makes sense</h2>
+  <section class="slide slide--example" aria-labelledby="s26">
+    <h2 id="s26">Example: Acrobat Flags a Correct Caption</h2>
+      <figure class="example-figure">
+        <img src="images/acrobat-lbl-caption-check.png" alt="Acrobat&#x27;s checker marks Lbl and LBody as failed for the caption label &quot;Fig. 2:&quot; under a diagram.">
+      </figure>
+    <div class="example-note">
+      <p>Acrobat's "Lbl and LBody" check expects a label only inside a list item, such as "1." or a bullet.</p>
+      <p>In this PDF 2.0 file, "Fig. 2:" is tagged as the label of its caption, which PDF 2.0 allows. A screen reader can tell the figure number apart from the caption text.</p>
+      <p>Acrobat's checker does not support PDF/UA-2, so it judges the file by older rules. The tagging is correct; the check is not.</p>
     </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
   </section>
 
   <!-- [27] -->
-  <section class="slide slide--chapter" aria-labelledby="s27">
-    <p class="chapter-number">Part 6</p>
-    <h2 id="s27">Designing for Meaning</h2>
+  <section class="slide slide--bleed" aria-labelledby="s27">
+    <img class="bleed-image" src="images/background.jpg" alt="">
+    <div class="key-phrase">
+      <h2 id="s27">A checker can tell you it's tagged, not that it makes sense</h2>
+    </div>
   </section>
 
   <!-- [28] -->
-  <section class="slide" aria-labelledby="s28">
-    <h2 id="s28">Alt Text That Teaches</h2>
+  <section class="slide slide--chapter" aria-labelledby="s28">
+    <p class="chapter-number">Part 6</p>
+    <h2 id="s28">Designing for Meaning</h2>
+  </section>
+
+  <!-- [29] -->
+  <section class="slide" aria-labelledby="s29">
+    <h2 id="s29">Alt Text That Teaches</h2>
     <div class="split">
       <div class="split-text">
     <ul>
@@ -842,9 +878,9 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
   </section>
 
-  <!-- [29] -->
-  <section class="slide" aria-labelledby="s29">
-    <h2 id="s29">Short Alt Text, Detailed Extended Description</h2>
+  <!-- [30] -->
+  <section class="slide" aria-labelledby="s30">
+    <h2 id="s30">Short Alt Text, Detailed Extended Description</h2>
     <ul>
       <li>Keep alt text to about 120-150 characters; screen readers read it in one go</li>
       <li>Put details in a linked extended description; a tagged data table for charts</li>
@@ -852,9 +888,9 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
   </section>
 
-  <!-- [30] -->
-  <section class="slide" aria-labelledby="s30">
-    <h2 id="s30">Video: Captions and Description</h2>
+  <!-- [31] -->
+  <section class="slide" aria-labelledby="s31">
+    <h2 id="s31">Video: Captions and Description</h2>
     <ul>
       <li>Accurate captions: review auto-captions, especially math and technical terms</li>
       <li>Gold standard: a dedicated audio description track, written and voiced by trained describers</li>
@@ -864,9 +900,9 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
   </section>
 
-  <!-- [31] -->
-  <section class="slide" aria-labelledby="s31">
-    <h2 id="s31">Video: On-Screen Content</h2>
+  <!-- [32] -->
+  <section class="slide" aria-labelledby="s32">
+    <h2 id="s32">Video: On-Screen Content</h2>
     <ul>
       <li>On-screen text: large (about 24 pt or more), high contrast, clear of the caption area</li>
       <li>Complex content (tables, charts, reference data): provide an accessible version as an attachment, and mention it aloud</li>
@@ -876,17 +912,17 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
   </section>
 
-  <!-- [32] -->
-  <section class="slide slide--bleed" aria-labelledby="s32">
+  <!-- [33] -->
+  <section class="slide slide--bleed" aria-labelledby="s33">
     <img class="bleed-image" src="images/background.jpg" alt="">
     <div class="key-phrase">
-      <h2 id="s32">Tags make content reachable; design makes it meaningful</h2>
+      <h2 id="s33">Tags make content reachable; design makes it meaningful</h2>
     </div>
   </section>
 
-  <!-- [33] -->
-  <section class="slide" aria-labelledby="s33">
-    <h2 id="s33">Where to Start</h2>
+  <!-- [34] -->
+  <section class="slide" aria-labelledby="s34">
+    <h2 id="s34">Where to Start</h2>
     <ul>
       <li>New and active course materials first, then syllabi and frequently used documents</li>
       <li>Check with a screen reader, not only a checker</li>
@@ -894,9 +930,9 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
   </section>
 
-  <!-- [34] -->
-  <section class="slide slide--conclusion" aria-labelledby="s34">
-    <h2 id="s34">Conclusion</h2>
+  <!-- [35] -->
+  <section class="slide slide--conclusion" aria-labelledby="s35">
+    <h2 id="s35">Conclusion</h2>
     <ul>
       <li>Accessibility is prepared, not patched</li>
       <li>Checkers find items; people judge meaning</li>
@@ -905,9 +941,9 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
   </section>
 
-  <!-- [35] -->
-  <section class="slide slide--contact" aria-labelledby="s35">
-    <h2 id="s35">Resources and Contact</h2>
+  <!-- [36] -->
+  <section class="slide slide--contact" aria-labelledby="s36">
+    <h2 id="s36">Resources and Contact</h2>
     <dl>
       <dt>Beamer to LTX Converter</dt>
       <dd><a href="https://beam2ltx.gerrypedraza.com/">beam2ltx.gerrypedraza.com</a></dd>
@@ -917,9 +953,9 @@
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
   </section>
 
-  <!-- [36] -->
-  <section class="slide slide--thanks" aria-labelledby="s36">
-    <h2 id="s36">Thank You</h2>
+  <!-- [37] -->
+  <section class="slide slide--thanks" aria-labelledby="s37">
+    <h2 id="s37">Thank You</h2>
     <p>Questions?</p>
   </section>
 
@@ -1219,6 +1255,13 @@
       case 'Home': show(0, true); e.preventDefault(); break;
       case 'End': show(slides.length - 1, true); e.preventDefault(); break;
     }
+  });
+
+  // Links to a slide number (e.g. <a href="#5"> on the agenda) jump to that slide
+  window.addEventListener('hashchange', () => {
+    const n = parseInt(location.hash.slice(1), 10);
+    if (Number.isNaN(n) || n - 1 === current) return;
+    if (document.body.classList.contains('handout')) present(n - 1); else show(n - 1, true);
   });
 
   // Start on the slide in the URL (e.g. index.html#5), or the first slide
