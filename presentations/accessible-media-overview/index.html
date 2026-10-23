@@ -312,6 +312,11 @@
   .slide--chapter-image .chapter-lead { color: var(--gray-700); }
   .slide--chapter-image .chapter-content > * { text-shadow: 0 0 0.12em rgba(255, 255, 255, 0.9); }
 
+  /* Variant: narrower card closer to the edge, for photos whose subject
+     starts near the middle. Add chapter--narrow to the <section>. */
+  .chapter--narrow .chapter-content { width: 33%; margin-left: 4%; }
+  .chapter--narrow h2 { font-size: 1.7em; }
+
   /* Variant: maroon gradient from the left, white text */
   .chapter--gradient::before {
     content: ""; position: absolute; inset: 0; z-index: 1;
@@ -772,9 +777,13 @@
   </section>
 
   <!-- [19] -->
-  <section class="slide slide--chapter" aria-labelledby="s19">
-    <p class="chapter-number">Part 5</p>
-    <h2 id="s19">What Checkers Can and Can't Do</h2>
+  <section class="slide slide--chapter-image chapter--narrow" aria-labelledby="s19">
+    <img class="bg" src="images/part-5-checkers.jpg" alt="">
+    <div class="chapter-content">
+      <p class="chapter-number">Part 5</p>
+      <h2 id="s19">What Checkers Can and Can't Do</h2>
+      <p class="chapter-lead">What automated checkers can confirm, and what only a person can judge.</p>
+    </div>
   </section>
 
   <!-- [20] -->
@@ -871,9 +880,13 @@
   </section>
 
   <!-- [28] -->
-  <section class="slide slide--chapter" aria-labelledby="s28">
-    <p class="chapter-number">Part 6</p>
-    <h2 id="s28">Designing for Meaning</h2>
+  <section class="slide slide--chapter-image chapter--narrow" aria-labelledby="s28">
+    <img class="bg" src="images/part-6-meaning.jpg" alt="">
+    <div class="chapter-content">
+      <p class="chapter-number">Part 6</p>
+      <h2 id="s28">Designing for Meaning</h2>
+      <p class="chapter-lead">Alt text, descriptions, and captions that convey the class content, not just compliance with standards.</p>
+    </div>
   </section>
 
   <!-- [29] -->
