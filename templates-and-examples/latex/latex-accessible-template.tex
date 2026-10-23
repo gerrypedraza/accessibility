@@ -1,0 +1,129 @@
+% !TeX program = lualatex
+%======================================================================%
+% Accessible LaTeX Template (PDF/UA-2)
+% https://github.com/gerrypedraza/accessibility
+% License: MIT. Suggestions or problems: open an issue on the repository.
+% For a full document built on this preamble, see
+% accessible-template-example-in-use.tex
+% Based on the LaTeX Tagging Project by the LaTeX Project Team:
+%   Usage instructions: https://tagging-project.latex-project.org/documentation/usage-instructions
+%   Package compatibility: https://latex3.github.io/tagging-project/tagging-status/
+% Tested with LaTeX kernel 2026-06-01. Check the links above for updates.
+%======================================================================%
+% Requires: LaTeX kernel 2025-11-01 or newer (current: 2026-06-01)
+% Overleaf: Menu > Settings > TeX Live version > Rolling TeX Live
+% Compiler: LuaLaTeX (required for automatic MathML generation)
+% Goal: output that works well with NVDA + MathCAT.
+% Check compatibility of packages: https://latex3.github.io/tagging-project/tagging-status/
+%======================================================================%
+
+% --- 1. METADATA AND PDF STANDARD (MUST come before \documentclass) ---
+% ===== MODE A: STANDARD (recommended) — PDF 2.0, PDF/UA-2, MathML =====
+\DocumentMetadata{
+  lang        = en-US,
+  pdfversion  = 2.0,
+  pdfstandard = ua-2,
+  tagging     = on,
+  check-tagging-status,
+  tagging-setup = {
+    math/setup        = {mathml-SE, mathml-AF},
+    extra-modules     = {verbatim-mo},
+    table/header-rows = 1
+  }
+}
+
+% ===== MODE B: COMPATIBILITY — PDF 1.7, PDF/UA-1, alt text math =======
+% For platforms/checkers that only evaluate UA-1 (e.g., to satisfy Ally).
+% Equations have no MathML: screen readers get alt text only, no
+% term-by-term navigation. Comment out Mode A and uncomment below.
+%\DocumentMetadata{
+%  lang        = en-US,
+%  pdfversion  = 1.7,
+%  pdfstandard = ua-1,
+%  tagging     = on,
+%  check-tagging-status,
+%  tagging-setup = {
+%    extra-modules     = {verbatim-mo},
+%    table/header-rows = 1
+%  }
+%}
+
+\documentclass[11pt]{article}
+
+% --- 2. PAGE LAYOUT ---------------------------------------------------
+\usepackage[letterpaper, margin=1in]{geometry}
+
+% --- 3. MATH (order matters) ------------------------------------------
+\usepackage{amsmath}       % environments: align, cases, \text, etc.
+\usepackage{unicode-math}  % load AFTER amsmath. Unicode math fonts enable
+                           % MathML generation. Loads fontspec.
+                           % DO NOT also load amssymb or amsfonts.
+% Optional styling: IEEE-like Times fonts (text and matching math).
+% Must come after unicode-math. Comment out both lines for the defaults.
+\setmainfont{STIX Two Text}
+\setmathfont{STIX Two Math}
+
+% --- 4. GRAPHICS AND TABLES -------------------------------------------
+\usepackage{graphicx}      % every image needs one of:
+                           %   \includegraphics[alt={...}]{file}
+                           %   \includegraphics[artifact]{file}  (decorative)
+                           % alt text = educational purpose, not appearance
+\usepackage{booktabs}      % compatible with tagging
+\usepackage{caption}
+\usepackage{float}
+
+% --- 5. LINKS AND DOCUMENT TITLE (load last) --------------------------
+\usepackage{hyperref}
+\hypersetup{pdftitle={Document Title Here}}  % PDF/UA requires a title
+
+% --- DO NOT USE -------------------------------------------------------
+% \usepackage{accessibility}  % deprecated (2020), targets PDF 1.5/1.6;
+%                             % replaced by \DocumentMetadata tagging
+% \usepackage{amssymb}        % redundant/conflicts with unicode-math
+% XeLaTeX or pdfLaTeX         % no automatic MathML
+
+% --- 6. BUILD INFORMATION (optional) ----------------------------------
+% \BuildInfo prints the compile setup: engine and TeX Live version, LaTeX
+% release, whether tagging is on, PDF version, unicode-math version, main
+% font, and date. Useful for checking a setup or reporting a problem.
+\makeatletter
+\ExplSyntaxOn
+\NewDocumentCommand{\BuildInfo}{}{
+  \begin{itemize}
+    \item \textbf{Engine:}~
+      \cs_if_exist:NTF \directlua
+        { \directlua{tex.sprint(-2, status.banner)} }
+        { Not~LuaLaTeX.~Switch~the~compiler~to~LuaLaTeX~for~automatic~MathML. }
+    \item \textbf{LaTeX~release:}~\fmtversion
+      \tl_if_eq:NnF \patch@level { 0 } { ~(patch~level~\patch@level) }
+    \item \textbf{Tagging:}~
+      \cs_if_exist:NTF \tag_if_active:TF
+        { \tag_if_active:TF { on } { off } }
+        { not~available~(LaTeX~release~too~old) }
+    \item \textbf{PDF~version:}~
+      \cs_if_exist:NTF \pdf_version: { \pdf_version: } { unknown }
+    \item \textbf{unicode-math:}~
+      \cs_if_exist:cTF { ver@unicode-math.sty }
+        { \use:c { ver@unicode-math.sty } } { not~loaded }
+    \item \textbf{Main~font:}~\fontname\font
+    \item \textbf{Compiled~on:}~\today
+  \end{itemize}
+}
+\ExplSyntaxOff
+\makeatother
+
+\begin{document}
+
+% Replace this placeholder with your content. Keep at least some content in
+% the document: with tagging on, an empty body produces no PDF at all.
+% See accessible-template-example-in-use.tex for headings, lists, tables,
+% figures with alt text, equations, and code.
+
+\section{Introduction}
+This is an accessible, tagged PDF produced with \LaTeX.
+
+% Optional: shows the setup this PDF was built with. Delete when not needed.
+\section{Build Information}
+\BuildInfo
+
+\end{document}
