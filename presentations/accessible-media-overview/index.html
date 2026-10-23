@@ -6,11 +6,6 @@
 <title>Accessible Media: Beyond the Checker</title>
 <!--
   Accessible HTML Slide Template
-  Developed and maintained by Gerry Pedraza and Christine Roach,
-  Engineering Studio for Advanced Instruction and Learning (eSAIL),
-  Texas A&M University
-  https://github.com/gerrypedraza/latex-pdf-ua2
-  License: MIT. Suggestions or problems: open an issue on the repository.
 
   HOW TO USE
   - Each slide is a <section class="slide ..."> with one heading.
@@ -28,32 +23,32 @@
 -->
 <style>
   :root {
-    /* Texas A&M brand palette.
-       Primary: Aggie Maroon and white. Secondary: neutrals and dark tones
+    /* Color palette.
+       Primary: maroon and white. Secondary: neutrals and dark tones
        for background floods, hierarchy and grounding. Accents: sparingly.
        Text pairings (contrast with white / with #202020):
          maroon 15.7 / -     dark maroon 17.6 / -   light maroon 9.6 / -
          #202020 16.3 / -    #3E3E3E 10.7 / -       #707070 5.0 / -  (white text: large or bold only)
          #D1D1D1  -  / 10.7  sand #D6D3C4  -  / 10.8 */
-    --tamu-maroon: #500000;        /* PMS 7421 Aggie Maroon (primary) */
-    --tamu-white: #ffffff;         /* primary */
-    --tamu-gray-900: #202020;      /* secondary */
-    --tamu-gray-700: #3e3e3e;      /* secondary */
-    --tamu-gray-500: #707070;      /* secondary */
-    --tamu-gray-200: #d1d1d1;      /* secondary */
-    --tamu-sand: #d6d3c4;          /* secondary */
-    --tamu-maroon-dark: #3c0000;   /* accent, use sparingly */
-    --tamu-maroon-light: #732f2f;  /* accent, use sparingly */
+    --maroon: #500000;        /* maroon (primary) */
+    --white: #ffffff;         /* primary */
+    --gray-900: #202020;      /* secondary */
+    --gray-700: #3e3e3e;      /* secondary */
+    --gray-500: #707070;      /* secondary */
+    --gray-200: #d1d1d1;      /* secondary */
+    --sand: #d6d3c4;          /* secondary */
+    --maroon-dark: #3c0000;   /* accent, use sparingly */
+    --maroon-light: #732f2f;  /* accent, use sparingly */
 
     /* Roles used by the layouts (change these to restyle the deck) */
-    --accent: var(--tamu-maroon);
-    --accent-dark: var(--tamu-maroon-dark);
-    --heading: var(--tamu-maroon-light);   /* slide titles: Light Maroon, 9.6:1 on white */
-    --accent-soft: color-mix(in srgb, var(--tamu-sand) 45%, #ffffff);  /* light tint for highlights */
-    --ink: var(--tamu-gray-900);   /* body text */
-    --muted: var(--tamu-gray-700); /* secondary text (10.7:1 on white) */
-    --paper: var(--tamu-white);    /* slide background */
-    --stage: var(--tamu-gray-900); /* area around the slide */
+    --accent: var(--maroon);
+    --accent-dark: var(--maroon-dark);
+    --heading: var(--maroon-light);   /* slide titles: Light Maroon, 9.6:1 on white */
+    --accent-soft: color-mix(in srgb, var(--sand) 45%, #ffffff);  /* light tint for highlights */
+    --ink: var(--gray-900);   /* body text */
+    --muted: var(--gray-700); /* secondary text (10.7:1 on white) */
+    --paper: var(--white);    /* slide background */
+    --stage: var(--gray-900); /* area around the slide */
     --focus: #1a5fb4;              /* keyboard focus outline: blue on purpose, so it
                                       stays visible on maroon, gray and white */
     --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -231,7 +226,7 @@
     margin: 0;
     min-height: 0;
     overflow: auto;
-    background: var(--tamu-gray-900);
+    background: var(--gray-900);
     color: #e6e6e6;
     border-radius: 0.3em;
     padding: 0.8em 1em;
@@ -256,7 +251,7 @@
   .file-view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .file-view .file-bar {
     display: flex; justify-content: space-between; align-items: center;
-    background: var(--tamu-gray-700); color: #ffffff;
+    background: var(--gray-700); color: #ffffff;
     font-size: 0.55em; padding: 0.5em 1em;
     border-radius: 0.3em 0.3em 0 0;
   }
@@ -269,7 +264,7 @@
      (maroon fade) or chapter--panel (dark panel) to the <section>.
      Photos with empty space on the left work best. The photo is decorative
      here (alt=""), because the slide's meaning is in its text. */
-  .slide--chapter-image { padding: 0; justify-content: center; background: var(--tamu-gray-900); }
+  .slide--chapter-image { padding: 0; justify-content: center; background: var(--gray-900); }
   .slide--chapter-image .bg {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; object-position: right center;
@@ -290,9 +285,9 @@
     padding: 1.2em 1.4em;
     box-shadow: 0 0.3em 1.2em rgba(0, 0, 0, 0.35);
   }
-  .slide--chapter-image .chapter-number { color: var(--tamu-gray-700); font-weight: 700; }
+  .slide--chapter-image .chapter-number { color: var(--gray-700); font-weight: 700; }
   .slide--chapter-image h2 { color: var(--heading); }
-  .slide--chapter-image .chapter-lead { color: var(--tamu-gray-700); }
+  .slide--chapter-image .chapter-lead { color: var(--gray-700); }
   .slide--chapter-image .chapter-content > * { text-shadow: 0 0 0.12em rgba(255, 255, 255, 0.9); }
 
   /* Variant: maroon gradient from the left, white text */
@@ -300,7 +295,7 @@
     content: ""; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(90deg,
       rgba(60, 0, 0, 0.94) 0%, rgba(60, 0, 0, 0.90) 38%,      /* #3C0000 dark maroon */
-      rgba(80, 0, 0, 0.55) 52%, rgba(80, 0, 0, 0) 68%);       /* #500000 Aggie Maroon */
+      rgba(80, 0, 0, 0.55) 52%, rgba(80, 0, 0, 0) 68%);       /* #500000 maroon */
   }
   /* Variant: dark translucent panel on the left half, white text */
   .chapter--panel .panel {
@@ -366,14 +361,14 @@
      pairing that passes WCAG AA contrast. */
   .bg-maroon, .bg-maroon-dark, .bg-maroon-light,
   .bg-gray-900, .bg-gray-700, .bg-gray-500 { color: #ffffff; }
-  .bg-maroon       { background: var(--tamu-maroon); }
-  .bg-maroon-dark  { background: var(--tamu-maroon-dark); }
-  .bg-maroon-light { background: var(--tamu-maroon-light); }
-  .bg-gray-900     { background: var(--tamu-gray-900); }
-  .bg-gray-700     { background: var(--tamu-gray-700); }
-  .bg-gray-500     { background: var(--tamu-gray-500); }  /* white text 5.0:1: avoid small or thin text */
-  .bg-gray-200     { background: var(--tamu-gray-200); }
-  .bg-sand         { background: var(--tamu-sand); }
+  .bg-maroon       { background: var(--maroon); }
+  .bg-maroon-dark  { background: var(--maroon-dark); }
+  .bg-maroon-light { background: var(--maroon-light); }
+  .bg-gray-900     { background: var(--gray-900); }
+  .bg-gray-700     { background: var(--gray-700); }
+  .bg-gray-500     { background: var(--gray-500); }  /* white text 5.0:1: avoid small or thin text */
+  .bg-gray-200     { background: var(--gray-200); }
+  .bg-sand         { background: var(--sand); }
   /* On dark backgrounds, headings, links and markers turn white */
   .bg-maroon h2, .bg-maroon-dark h2, .bg-maroon-light h2,
   .bg-gray-900 h2, .bg-gray-700 h2, .bg-gray-500 h2,
@@ -384,7 +379,7 @@
   .bg-maroon .footer, .bg-maroon-dark .footer, .bg-maroon-light .footer,
   .bg-gray-900 .footer, .bg-gray-700 .footer, .bg-gray-500 .footer { color: #ffffff; border-top-color: #ffffff; }
   /* On light gray and sand, keep maroon headings and dark text */
-  .bg-gray-200 .footer, .bg-sand .footer { color: var(--tamu-gray-900); }
+  .bg-gray-200 .footer, .bg-sand .footer { color: var(--gray-900); }
 
 
   /* ---------- Glossary (press G) ----------
@@ -400,13 +395,13 @@
   .glossary[open] { display: flex; flex-direction: column; }
   .glossary-head {
     display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem;
-    padding: 1rem 1.5rem; border-bottom: 1px solid var(--tamu-gray-200);
+    padding: 1rem 1.5rem; border-bottom: 1px solid var(--gray-200);
   }
   .glossary-head h2 { margin: 0; flex: 1; font-size: 1.6rem; color: var(--heading); }
   .glossary-head label { font-size: 0.95rem; color: var(--muted); }
   .glossary-head input {
     font: inherit; padding: 0.3rem 0.6rem; width: 14rem;
-    border: 1px solid var(--tamu-gray-500); border-radius: 0.3rem;
+    border: 1px solid var(--gray-500); border-radius: 0.3rem;
   }
   .glossary-close {
     font: inherit; padding: 0.3rem 0.9rem; cursor: pointer;
@@ -537,8 +532,7 @@
     <h1 id="s01">Accessible Media: Beyond the Checker</h1>
     <p class="subtitle">Why passing an accessibility checker is not the same as being accessible</p>
     <div class="meta">
-      <p>Gerry Pedraza</p>
-      <p>Engineering Studio for Advanced Instruction and Learning (eSAIL), Texas A&amp;M University</p>
+      <p>Gerry Pedraza &amp; Christine Roach</p>
       <p>Last updated: 10/23/26</p>
     </div>
   </section>
@@ -915,16 +909,10 @@
   <section class="slide slide--contact" aria-labelledby="s35">
     <h2 id="s35">Resources and Contact</h2>
     <dl>
-      <dt>Accessible LaTeX template</dt>
-      <dd><a href="https://github.com/gerrypedraza/latex-pdf-ua2">github.com/gerrypedraza/latex-pdf-ua2</a></dd>
-      <dt>Suggestions or problems</dt>
-      <dd><a href="https://github.com/gerrypedraza/latex-pdf-ua2/issues">Open an issue on the repository</a></dd>
       <dt>Beamer to LTX Converter</dt>
       <dd><a href="https://beam2ltx.gerrypedraza.com/">beam2ltx.gerrypedraza.com</a></dd>
       <dt>LaTeX Tagging Project</dt>
       <dd><a href="https://latex3.github.io/tagging-project/">latex3.github.io/tagging-project</a></dd>
-      <dt>Support</dt>
-      <dd>eSAIL and disability resources</dd>
     </dl>
     <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
   </section>
