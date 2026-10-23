@@ -1,0 +1,95 @@
+<svg width="900" height="1200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="t d" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <title id="t">The building blocks of an accessible document</title>
+  <desc id="d">A math handout with each part tagged: the main heading as H1, a subheading as H2, a bulleted list, a formula as MathML, a table with header cells, a bar chart as a figure with alt text, and a decorative divider marked as an artifact so screen readers skip it.</desc>
+  <rect width="900" height="1200" fill="#ffffff"/>
+  <rect x="260" y="82" width="400" height="1060" rx="12" fill="#d1d1d1"/>
+  <rect x="250" y="70" width="400" height="1060" rx="12" fill="#ffffff" stroke="#707070" stroke-width="2"/>
+  <text x="285" y="145" font-size="36" font-weight="700" fill="#202020">Week 3: Sums</text>
+  <text x="285" y="220" font-size="26" font-weight="700" fill="#3e3e3e">The sample mean</text>
+  <rect x="285" y="242" width="330" height="9" rx="4" fill="#707070"/>
+  <rect x="285" y="262" width="310" height="9" rx="4" fill="#707070"/>
+  <rect x="285" y="282" width="200" height="9" rx="4" fill="#707070"/>
+  <circle cx="293" cy="335" r="6" fill="#500000"/>
+  <rect x="311" y="330" width="260" height="10" rx="5" fill="#707070"/>
+  <circle cx="293" cy="371" r="6" fill="#500000"/>
+  <rect x="311" y="366" width="220" height="10" rx="5" fill="#707070"/>
+  <circle cx="293" cy="407" r="6" fill="#500000"/>
+  <rect x="311" y="402" width="240" height="10" rx="5" fill="#707070"/>
+  <text x="315" y="518" font-size="40" font-style="italic" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="start">x</text>
+  <line x1="317" y1="483" x2="338" y2="483" stroke="#202020" stroke-width="2.5"/>
+  <text x="348" y="518" font-size="38" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="start">=</text>
+  <text x="402" y="497" font-size="32" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="middle">1</text>
+  <line x1="387" y1="505" x2="417" y2="505" stroke="#202020" stroke-width="2.5"/>
+  <text x="402" y="539" font-size="32" font-style="italic" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="middle">n</text>
+  <text x="428" y="527" font-size="62" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="start">&#8721;</text>
+  <text x="452" y="467" font-size="22" font-style="italic" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="middle">n</text>
+  <text x="452" y="555" font-size="22" font-style="italic" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="middle">i = 1</text>
+  <text x="480" y="518" font-size="40" font-style="italic" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="start">x</text>
+  <text x="498" y="529" font-size="24" font-style="italic" font-family="STIX Two Text, Cambria, 'Times New Roman', serif" fill="#202020" text-anchor="start">i</text>
+  <rect x="285" y="610" width="330" height="38" fill="#d6d3c4"/>
+  <text x="297.0" y="636" font-size="20" font-weight="700" fill="#202020">Week</text>
+  <text x="407.0" y="636" font-size="20" font-weight="700" fill="#202020">Topic</text>
+  <text x="517.0" y="636" font-size="20" font-weight="700" fill="#202020">Due</text>
+  <rect x="297.0" y="663" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="407.0" y="663" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="517.0" y="663" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="297.0" y="701" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="407.0" y="701" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="517.0" y="701" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="297.0" y="739" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="407.0" y="739" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <rect x="517.0" y="739" width="70.0" height="8" rx="4" fill="#a8a59b"/>
+  <line x1="285" y1="610" x2="615" y2="610" stroke="#707070" stroke-width="1.5"/>
+  <line x1="285" y1="648" x2="615" y2="648" stroke="#707070" stroke-width="1.5"/>
+  <line x1="285" y1="686" x2="615" y2="686" stroke="#707070" stroke-width="1.5"/>
+  <line x1="285" y1="724" x2="615" y2="724" stroke="#707070" stroke-width="1.5"/>
+  <line x1="285" y1="762" x2="615" y2="762" stroke="#707070" stroke-width="1.5"/>
+  <line x1="285.0" y1="610" x2="285.0" y2="762" stroke="#707070" stroke-width="1.5"/>
+  <line x1="395.0" y1="610" x2="395.0" y2="762" stroke="#707070" stroke-width="1.5"/>
+  <line x1="505.0" y1="610" x2="505.0" y2="762" stroke="#707070" stroke-width="1.5"/>
+  <line x1="615.0" y1="610" x2="615.0" y2="762" stroke="#707070" stroke-width="1.5"/>
+  <line x1="305" y1="970" x2="595" y2="970" stroke="#3e3e3e" stroke-width="3"/>
+  <line x1="305" y1="970" x2="305" y2="800" stroke="#3e3e3e" stroke-width="3"/>
+  <rect x="330" y="900" width="44" height="70" fill="#3e3e3e"/>
+  <rect x="398" y="840" width="44" height="130" fill="#500000"/>
+  <rect x="466" y="875" width="44" height="95" fill="#707070"/>
+  <rect x="534" y="820" width="44" height="150" fill="#732f2f"/>
+  <line x1="315" y1="1055" x2="432.0" y2="1055" stroke="#a8a59b" stroke-width="2"/>
+  <line x1="468.0" y1="1055" x2="585" y2="1055" stroke="#a8a59b" stroke-width="2"/>
+  <path d="M450.0,1045 L460.0,1055 L450.0,1065 L440.0,1055 z" fill="#a8a59b"/>
+  <line x1="218" y1="132" x2="268" y2="132" stroke="#500000" stroke-width="3"/>
+  <circle cx="268" cy="132" r="7" fill="#500000"/>
+  <rect x="40" y="96.0" width="178" height="72" rx="12" fill="#500000"/>
+  <text x="129.0" y="128" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">H1</text>
+  <text x="129.0" y="156" font-size="19" fill="#ffffff" text-anchor="middle">main heading</text>
+  <line x1="682" y1="211" x2="532" y2="211" stroke="#500000" stroke-width="3"/>
+  <circle cx="532" cy="211" r="7" fill="#500000"/>
+  <rect x="682" y="175.0" width="178" height="72" rx="12" fill="#500000"/>
+  <text x="771.0" y="207" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">H2</text>
+  <text x="771.0" y="235" font-size="19" fill="#ffffff" text-anchor="middle">subheading</text>
+  <line x1="218" y1="371" x2="268" y2="371" stroke="#500000" stroke-width="3"/>
+  <circle cx="268" cy="371" r="7" fill="#500000"/>
+  <rect x="40" y="335.0" width="178" height="72" rx="12" fill="#500000"/>
+  <text x="129.0" y="367" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">List</text>
+  <text x="129.0" y="395" font-size="19" fill="#ffffff" text-anchor="middle">real bullets</text>
+  <line x1="682" y1="510" x2="565" y2="510" stroke="#500000" stroke-width="3"/>
+  <circle cx="565" cy="510" r="7" fill="#500000"/>
+  <rect x="682" y="474.0" width="178" height="72" rx="12" fill="#500000"/>
+  <text x="771.0" y="506" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">Formula</text>
+  <text x="771.0" y="534" font-size="19" fill="#ffffff" text-anchor="middle">as MathML</text>
+  <line x1="218" y1="629" x2="268" y2="629" stroke="#500000" stroke-width="3"/>
+  <circle cx="268" cy="629" r="7" fill="#500000"/>
+  <rect x="40" y="593.0" width="178" height="72" rx="12" fill="#500000"/>
+  <text x="129.0" y="625" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">Table</text>
+  <text x="129.0" y="653" font-size="19" fill="#ffffff" text-anchor="middle">with headers</text>
+  <line x1="682" y1="890" x2="609" y2="890" stroke="#500000" stroke-width="3"/>
+  <circle cx="609" cy="890" r="7" fill="#500000"/>
+  <rect x="682" y="854.0" width="178" height="72" rx="12" fill="#500000"/>
+  <text x="771.0" y="886" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">Figure</text>
+  <text x="771.0" y="914" font-size="19" fill="#ffffff" text-anchor="middle">+ alt text</text>
+  <line x1="218" y1="1055" x2="309" y2="1055" stroke="#707070" stroke-width="3"/>
+  <circle cx="309" cy="1055" r="7" fill="#707070"/>
+  <rect x="40" y="1019.0" width="178" height="72" rx="12" fill="#707070"/>
+  <text x="129.0" y="1051" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">Artifact</text>
+  <text x="129.0" y="1079" font-size="19" fill="#ffffff" text-anchor="middle">skipped</text>
+</svg>

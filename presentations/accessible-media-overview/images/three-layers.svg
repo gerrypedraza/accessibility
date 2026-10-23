@@ -1,0 +1,50 @@
+<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t d" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <title id="t">Three layers: standards, structure, design</title>
+  <desc id="d">Standards are the outer container. Inside it is the document structure: headings, reading order, lists and tables, alt text, math as MathML, and title and language. Design sits outside the standards and shapes the structure.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#732f2f"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- Standards: the container -->
+  <rect x="40" y="50" width="1010" height="800" rx="26" fill="#f2f0ea" stroke="#500000" stroke-width="6"/>
+  <text x="90" y="125" font-size="46" font-weight="700" fill="#500000" letter-spacing="4">STANDARDS</text>
+  <text x="90" y="175" font-size="30" fill="#3e3e3e">WCAG and PDF/UA: the rules a document must meet</text>
+
+  <!-- Structure: inside the standards -->
+  <rect x="100" y="230" width="880" height="560" rx="20" fill="#ffffff" stroke="#3e3e3e" stroke-width="3"/>
+  <text x="150" y="305" font-size="42" font-weight="700" fill="#202020" letter-spacing="3">STRUCTURE</text>
+  <text x="150" y="352" font-size="29" fill="#3e3e3e">The tags assistive technology reads</text>
+  <g font-size="27" font-weight="600" fill="#500000" text-anchor="middle">
+    <rect x="150" y="410" width="250" height="80" rx="40" fill="#ffffff" stroke="#500000" stroke-width="3"/>
+    <text x="275" y="461">Headings</text>
+    <rect x="420" y="410" width="250" height="80" rx="40" fill="#ffffff" stroke="#500000" stroke-width="3"/>
+    <text x="545" y="461">Reading order</text>
+    <rect x="690" y="410" width="250" height="80" rx="40" fill="#ffffff" stroke="#500000" stroke-width="3"/>
+    <text x="815" y="461">Lists &amp; tables</text>
+    <rect x="150" y="520" width="250" height="80" rx="40" fill="#ffffff" stroke="#500000" stroke-width="3"/>
+    <text x="275" y="571">Alt text</text>
+    <rect x="420" y="520" width="250" height="80" rx="40" fill="#ffffff" stroke="#500000" stroke-width="3"/>
+    <text x="545" y="571">Math as MathML</text>
+    <rect x="690" y="520" width="250" height="80" rx="40" fill="#ffffff" stroke="#500000" stroke-width="3"/>
+    <text x="815" y="571">Title &amp; language</text>
+  </g>
+  <text x="150" y="700" font-size="27" font-style="italic" fill="#3e3e3e">Checkers can test this box against the rules.</text>
+  <text x="150" y="740" font-size="27" font-style="italic" fill="#3e3e3e">They can't test whether it makes sense.</text>
+
+  <!-- Design: outside, shaping the structure -->
+  <g stroke="#732f2f" stroke-width="9" fill="none" marker-end="url(#arrow)">
+    <line x1="1180" y1="380" x2="995" y2="430"/>
+    <line x1="1160" y1="470" x2="995" y2="470"/>
+    <line x1="1180" y1="560" x2="995" y2="510"/>
+  </g>
+  <circle cx="1370" cy="470" r="200" fill="#732f2f"/>
+  <g fill="#ffffff" text-anchor="middle">
+    <text x="1370" y="420" font-size="46" font-weight="700" letter-spacing="4">DESIGN</text>
+    <text x="1370" y="475" font-size="29">Does it make</text>
+    <text x="1370" y="512" font-size="29">sense to</text>
+    <text x="1370" y="549" font-size="29">a person?</text>
+  </g>
+</svg>

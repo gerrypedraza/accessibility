@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessible Media: Beyond the Checker</title>
+<!--
+  Accessible HTML Slide Template
+  Developed and maintained by Gerry Pedraza and Christine Roach,
+  Engineering Studio for Advanced Instruction and Learning (eSAIL),
+  Texas A&M University
+  https://github.com/gerrypedraza/latex-pdf-ua2
+  License: MIT. Suggestions or problems: open an issue on the repository.
+
+  HOW TO USE
+  - Each slide is a <section class="slide ..."> with one heading.
+    Copy a slide, change its text, delete the slides you don't need.
+  - Navigate: Right/Left arrows, Page Up/Down, Space, Home, End.
+  - Handout view (all slides as tiles, best for screen readers and
+    printing): press H or use the "Handout view" button. Click a tile, or
+    its "Slide N" button, to present from that slide.
+  - Every informative image needs alt text (~120-150 characters max);
+    put longer detail in the slide text or a linked description.
+    Decorative images use alt="" so screen readers skip them.
+  - Glossary: press G or use the "Glossary" button. Terms live in the
+    <dialog id="glossary"> near the end of the file, grouped under <h3>s.
+  - Colors are set once in :root below. Keep text contrast at 4.5:1 or more.
+-->
+<style>
+  :root {
+    /* Texas A&M brand palette.
+       Primary: Aggie Maroon and white. Secondary: neutrals and dark tones
+       for background floods, hierarchy and grounding. Accents: sparingly.
+       Text pairings (contrast with white / with #202020):
+         maroon 15.7 / -     dark maroon 17.6 / -   light maroon 9.6 / -
+         #202020 16.3 / -    #3E3E3E 10.7 / -       #707070 5.0 / -  (white text: large or bold only)
+         #D1D1D1  -  / 10.7  sand #D6D3C4  -  / 10.8 */
+    --tamu-maroon: #500000;        /* PMS 7421 Aggie Maroon (primary) */
+    --tamu-white: #ffffff;         /* primary */
+    --tamu-gray-900: #202020;      /* secondary */
+    --tamu-gray-700: #3e3e3e;      /* secondary */
+    --tamu-gray-500: #707070;      /* secondary */
+    --tamu-gray-200: #d1d1d1;      /* secondary */
+    --tamu-sand: #d6d3c4;          /* secondary */
+    --tamu-maroon-dark: #3c0000;   /* accent, use sparingly */
+    --tamu-maroon-light: #732f2f;  /* accent, use sparingly */
+
+    /* Roles used by the layouts (change these to restyle the deck) */
+    --accent: var(--tamu-maroon);
+    --accent-dark: var(--tamu-maroon-dark);
+    --heading: var(--tamu-maroon-light);   /* slide titles: Light Maroon, 9.6:1 on white */
+    --accent-soft: color-mix(in srgb, var(--tamu-sand) 45%, #ffffff);  /* light tint for highlights */
+    --ink: var(--tamu-gray-900);   /* body text */
+    --muted: var(--tamu-gray-700); /* secondary text (10.7:1 on white) */
+    --paper: var(--tamu-white);    /* slide background */
+    --stage: var(--tamu-gray-900); /* area around the slide */
+    --focus: #1a5fb4;              /* keyboard focus outline: blue on purpose, so it
+                                      stays visible on maroon, gray and white */
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--stage);
+    color: var(--ink);
+    font-family: var(--font);
+  }
+
+  /* ---------- Deck and slide frame (16:9, scales to the window) ---------- */
+  .deck {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+  /* --slide-w is the slide's width. Text size is a fixed ratio of it, so a
+     slide looks the same at any size: full screen, a tile, or a printed page. */
+  :root { --slide-w: min(100vw, calc(100vh * 16 / 9)); }
+  .slide {
+    position: relative;
+    width: var(--slide-w);
+    aspect-ratio: 16 / 9;
+    background: var(--paper);
+    overflow: hidden;
+    font-size: calc(var(--slide-w) * 0.024);   /* all sizes below are in em */
+    line-height: 1.35;
+    padding: 6% 7% 7%;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide[hidden] { display: none; }
+
+  .slide h1, .slide h2 { margin: 0 0 0.6em; line-height: 1.15; }
+  .slide h1 { font-size: 2.6em; }
+  .slide h2 { font-size: 1.75em; color: var(--heading); }
+  .slide h2:focus, .slide h1:focus { outline: none; }
+
+  .slide ul, .slide ol { margin: 0; padding-left: 1.2em; }
+  .slide li { margin: 0 0 0.55em; }
+  .slide li::marker { color: var(--accent); }
+  .slide p { margin: 0 0 0.6em; }
+
+  .slide a { color: var(--accent); text-underline-offset: 0.15em; }
+  .slide :not(pre) > code { font-size: 0.85em; }   /* inline code matches text size */
+
+  /* Footer line on content slides */
+  .slide .footer {
+    position: absolute;
+    left: 7%; right: 7%; bottom: 3.5%;
+    display: flex; justify-content: space-between;
+    font-size: 0.55em; color: var(--muted);
+    border-top: 0.12em solid var(--accent);
+    padding-top: 0.6em;
+  }
+
+  /* ---------- Layouts ---------- */
+
+  /* Title slide */
+  .slide--title {
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #ffffff;
+  }
+  .slide--title .subtitle { font-size: 1.2em; margin-bottom: 1.6em; opacity: 0.95; }
+  .slide--title .meta { font-size: 0.85em; border-left: 0.2em solid #ffffff; padding-left: 0.8em; }
+  .slide--title .meta p { margin: 0.15em 0; }
+
+  /* Chapter (section divider) slide */
+  .slide--chapter {
+    justify-content: center;
+    background: var(--accent);
+    color: #ffffff;
+  }
+  .slide--chapter .chapter-number {
+    font-size: 0.9em; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4em;
+  }
+  .slide--chapter h2 { color: #ffffff; font-size: 2.4em; }
+  .slide--chapter .chapter-lead { font-size: 1.05em; max-width: 70%; opacity: 0.95; }
+
+  /* Agenda: numbered list in two columns when long */
+  .slide--agenda ol { columns: 2; column-gap: 3em; font-size: 1.05em; }
+  .slide--agenda li { break-inside: avoid; }
+
+  /* Text left, image right (and the reverse) */
+  .split {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5%;
+    align-items: center;
+    min-height: 0;
+  }
+  .split--reverse .split-text { order: 2; }
+  .split--reverse .split-media { order: 1; }
+  .split-media { margin: 0; min-height: 0; }
+  .split-media img { width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
+  figure figcaption {
+    font-size: 0.6em; color: var(--muted); margin-top: 0.5em;
+  }
+
+  /* Title and full-width image */
+  .slide--image .full-figure {
+    flex: 1; margin: 0; min-height: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .slide--image .full-figure img {
+    max-width: 100%; max-height: 92%; object-fit: contain; display: block;
+  }
+
+  /* Full-bleed image with a key phrase */
+  .slide--bleed { padding: 0; justify-content: center; align-items: center; }
+  .slide--bleed .bleed-image {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .slide--bleed .key-phrase {
+    position: relative;
+    max-width: 70%;
+    background: rgba(255, 255, 255, 0.78);   /* translucent white box */
+    padding: 1em 1.4em;
+    border-radius: 0.3em;
+    text-align: center;
+  }
+  .slide--bleed .key-phrase h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 2em;
+    text-shadow: 0 0.04em 0.12em rgba(0, 0, 0, 0.35);   /* subtle shadow */
+  }
+
+  /* Conclusion: highlighted takeaways */
+  .slide--conclusion ul { list-style: none; padding: 0; }
+  .slide--conclusion li {
+    background: var(--accent-soft);
+    border-left: 0.25em solid var(--accent);
+    padding: 0.5em 0.8em;
+  }
+
+  /* Contact */
+  .slide--contact dl {
+    display: grid; grid-template-columns: max-content 1fr; gap: 0.6em 1.2em; margin: 0;
+  }
+  .slide--contact dt { font-weight: 700; color: var(--accent); }
+  .slide--contact dd { margin: 0; overflow-wrap: anywhere; }
+  .slide--contact .credit { margin-top: 1.4em; font-size: 0.8em; color: var(--muted); }
+
+  /* Thank you */
+  .slide--thanks {
+    justify-content: center; align-items: center; text-align: center;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #ffffff;
+  }
+  .slide--thanks h2 { color: #ffffff; font-size: 3em; }
+  .slide--thanks a { color: #ffffff; }
+
+
+  /* Code and explanation: explanation left (30%), code right (70%) */
+  .code-split {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    gap: 4%;
+    min-height: 0;
+  }
+  .code-split .explain { align-self: center; font-size: 0.85em; }
+  .code-split .explain ul { padding-left: 1.1em; }
+  .code-split pre.code { font-size: 0.58em; }
+
+  /* Code blocks: dark panel, line numbers, LaTeX highlighting */
+  pre.code {
+    margin: 0;
+    min-height: 0;
+    overflow: auto;
+    background: var(--tamu-gray-900);
+    color: #e6e6e6;
+    border-radius: 0.3em;
+    padding: 0.8em 1em;
+    font: 0.5em/1.5 ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+    counter-reset: line;
+    tab-size: 2;
+  }
+  pre.code:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  pre.code .ln { white-space: pre; }   /* inline: each line ends with its own newline */
+  pre.code .ln::before {
+    counter-increment: line;
+    content: counter(line) / "";          /* line numbers are not read aloud */
+    display: inline-block;
+    width: 2.6em; margin-right: 1.2em;
+    text-align: right; color: #8b949e;
+  }
+  pre.code .tok-cmd   { color: #ff9e9e; }                 /* \commands */
+  pre.code .tok-com   { color: #9fb3c8; font-style: italic; } /* % comments */
+  pre.code .tok-brace { color: #ffd479; }                 /* { } [ ] */
+
+  /* File viewer: a scrollable file with a header bar */
+  .file-view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .file-view .file-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--tamu-gray-700); color: #ffffff;
+    font-size: 0.55em; padding: 0.5em 1em;
+    border-radius: 0.3em 0.3em 0 0;
+  }
+  .file-view .file-bar a { color: #ffd479; }
+  .file-view pre.code { flex: 1; border-radius: 0 0 0.3em 0.3em; }
+
+
+  /* ---------- Chapter divider with photo ----------
+     Default: light card (highest contrast). Variants: add chapter--gradient
+     (maroon fade) or chapter--panel (dark panel) to the <section>.
+     Photos with empty space on the left work best. The photo is decorative
+     here (alt=""), because the slide's meaning is in its text. */
+  .slide--chapter-image { padding: 0; justify-content: center; background: var(--tamu-gray-900); }
+  .slide--chapter-image .bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: right center;
+  }
+  .slide--chapter-image .chapter-content { position: relative; z-index: 2; }
+  .slide--chapter-image .chapter-number {
+    font-size: 0.9em; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4em;
+  }
+  .slide--chapter-image h2 { font-size: 1.9em; margin-bottom: 0.5em; }
+  .slide--chapter-image .chapter-lead { font-size: 1.05em; margin: 0; }
+
+  /* Default: light card, dark text, a touch of white glow to lift the text */
+  .slide--chapter-image .chapter-content {
+    width: 42%; margin-left: 6%;
+    background: rgba(255, 255, 255, 0.90);
+    border-top: 0.3em solid var(--accent);
+    border-radius: 0.3em;
+    padding: 1.2em 1.4em;
+    box-shadow: 0 0.3em 1.2em rgba(0, 0, 0, 0.35);
+  }
+  .slide--chapter-image .chapter-number { color: var(--tamu-gray-700); font-weight: 700; }
+  .slide--chapter-image h2 { color: var(--heading); }
+  .slide--chapter-image .chapter-lead { color: var(--tamu-gray-700); }
+  .slide--chapter-image .chapter-content > * { text-shadow: 0 0 0.12em rgba(255, 255, 255, 0.9); }
+
+  /* Variant: maroon gradient from the left, white text */
+  .chapter--gradient::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(90deg,
+      rgba(60, 0, 0, 0.94) 0%, rgba(60, 0, 0, 0.90) 38%,      /* #3C0000 dark maroon */
+      rgba(80, 0, 0, 0.55) 52%, rgba(80, 0, 0, 0) 68%);       /* #500000 Aggie Maroon */
+  }
+  /* Variant: dark translucent panel on the left half, white text */
+  .chapter--panel .panel {
+    position: absolute; top: 0; bottom: 0; left: 0; width: 50%; z-index: 1;
+    background: rgba(32, 32, 32, 0.80);     /* #202020 */
+    backdrop-filter: blur(4px);
+    border-right: 0.35em solid var(--accent);
+  }
+  .chapter--gradient .chapter-content,
+  .chapter--panel .chapter-content {
+    background: none; border: 0; border-radius: 0; padding: 0; box-shadow: none;
+    margin-left: 7%;
+  }
+  .chapter--gradient .chapter-content { width: 46%; }
+  .chapter--panel .chapter-content { width: 40%; }
+  .chapter--gradient .chapter-content > *,
+  .chapter--panel .chapter-content > * {
+    color: #ffffff; text-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.45);
+  }
+  .chapter--gradient .chapter-number, .chapter--panel .chapter-number { font-weight: 400; }
+
+
+  /* Brand palette reference slide */
+  .swatches {
+    list-style: none; padding: 0 !important; margin: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5em;
+  }
+  .swatches .swatch {
+    margin: 0; padding: 0.5em 0.7em; border-radius: 0.25em;
+    display: flex; flex-direction: column; font-size: 0.6em; line-height: 1.3;
+  }
+  .swatches .swatch strong { font-size: 1.15em; }
+  .swatches .swatch code { color: inherit; }
+  .palette-note { margin-top: 1.6em; font-size: 0.6em; color: var(--muted); }
+
+  /* ---------- Info banner ----------
+     A note at the bottom of a slide, e.g. a link to more details.
+     <div class="info-banner" role="note">
+       <span class="info-icon" aria-hidden="true">i</span>
+       <p>Text with a <a href="...">descriptive link</a></p>
+     </div> */
+  .info-banner {
+    margin-top: auto;                       /* sits at the bottom, above the footer */
+    margin-bottom: 1.4em;
+    display: flex; align-items: center; gap: 0.7em;
+    background: var(--accent-soft);
+    border-left: 0.25em solid var(--accent);
+    border-radius: 0.25em;
+    padding: 0.55em 0.9em;
+    font-size: 0.75em;
+  }
+  .info-banner p { margin: 0; }
+  .info-banner .info-icon {
+    flex: none;
+    width: 1.5em; height: 1.5em; border-radius: 50%;
+    background: var(--accent); color: #ffffff;
+    display: grid; place-items: center;
+    font: italic 700 1em/1 Georgia, "Times New Roman", serif;
+  }
+
+  /* ---------- Background color options (brand palette) ----------
+     Add one class to a <section class="slide ...">. Text color is set to a
+     pairing that passes WCAG AA contrast. */
+  .bg-maroon, .bg-maroon-dark, .bg-maroon-light,
+  .bg-gray-900, .bg-gray-700, .bg-gray-500 { color: #ffffff; }
+  .bg-maroon       { background: var(--tamu-maroon); }
+  .bg-maroon-dark  { background: var(--tamu-maroon-dark); }
+  .bg-maroon-light { background: var(--tamu-maroon-light); }
+  .bg-gray-900     { background: var(--tamu-gray-900); }
+  .bg-gray-700     { background: var(--tamu-gray-700); }
+  .bg-gray-500     { background: var(--tamu-gray-500); }  /* white text 5.0:1: avoid small or thin text */
+  .bg-gray-200     { background: var(--tamu-gray-200); }
+  .bg-sand         { background: var(--tamu-sand); }
+  /* On dark backgrounds, headings, links and markers turn white */
+  .bg-maroon h2, .bg-maroon-dark h2, .bg-maroon-light h2,
+  .bg-gray-900 h2, .bg-gray-700 h2, .bg-gray-500 h2,
+  .bg-maroon a, .bg-maroon-dark a, .bg-maroon-light a,
+  .bg-gray-900 a, .bg-gray-700 a, .bg-gray-500 a { color: #ffffff; }
+  .bg-maroon li::marker, .bg-maroon-dark li::marker, .bg-maroon-light li::marker,
+  .bg-gray-900 li::marker, .bg-gray-700 li::marker, .bg-gray-500 li::marker { color: #ffffff; }
+  .bg-maroon .footer, .bg-maroon-dark .footer, .bg-maroon-light .footer,
+  .bg-gray-900 .footer, .bg-gray-700 .footer, .bg-gray-500 .footer { color: #ffffff; border-top-color: #ffffff; }
+  /* On light gray and sand, keep maroon headings and dark text */
+  .bg-gray-200 .footer, .bg-sand .footer { color: var(--tamu-gray-900); }
+
+
+  /* ---------- Glossary (press G) ----------
+     A dialog over the slides. Esc or the Close button returns to the slide. */
+  .glossary {
+    width: min(66rem, 94vw); max-height: 90vh; padding: 0;
+    border: 0; border-top: 0.35rem solid var(--accent); border-radius: 0.4rem;
+    background: var(--paper); color: var(--ink);
+    font-family: inherit; font-size: 1.25rem; line-height: 1.5;   /* readable when projected */
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.45);
+  }
+  .glossary::backdrop { background: rgba(20, 20, 20, 0.6); }
+  .glossary[open] { display: flex; flex-direction: column; }
+  .glossary-head {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem;
+    padding: 1rem 1.5rem; border-bottom: 1px solid var(--tamu-gray-200);
+  }
+  .glossary-head h2 { margin: 0; flex: 1; font-size: 1.6rem; color: var(--heading); }
+  .glossary-head label { font-size: 0.95rem; color: var(--muted); }
+  .glossary-head input {
+    font: inherit; padding: 0.3rem 0.6rem; width: 14rem;
+    border: 1px solid var(--tamu-gray-500); border-radius: 0.3rem;
+  }
+  .glossary-close {
+    font: inherit; padding: 0.3rem 0.9rem; cursor: pointer;
+    background: var(--accent); color: #ffffff; border: 0; border-radius: 0.3rem;
+  }
+  .glossary-body { overflow-y: auto; padding: 0.5rem 1.5rem 1.5rem; }
+  .glossary-body h3 {
+    margin: 1.2rem 0 0.4rem; font-size: 1.1rem; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .glossary-body dl { margin: 0; }
+  .glossary-body .term { padding: 0.55rem 0; border-bottom: 1px solid #ecebe6; }
+  .glossary-body dt { font-weight: 700; }
+  .glossary-body dd { margin: 0.15rem 0 0; }
+  .glossary-body a { color: var(--accent); }
+  .glossary-empty { color: var(--muted); }
+
+
+  /* Planned-image placeholder (draft decks only) */
+  .placeholder {
+    align-self: center;
+    border: 0.12em dashed #9a8a8a; border-radius: 0.4em;
+    background: #faf6f6; color: #5a4a4a;
+    padding: 1.2em; font-size: 0.75em; line-height: 1.4;
+    min-height: 60%; display: flex; flex-direction: column; justify-content: center;
+  }
+  .placeholder-label {
+    font-size: 0.8em; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.5em;
+  }
+  .slide .split-text ul { font-size: 0.95em; }
+  .slide .split-media { height: 100%; display: flex; align-items: center; justify-content: center; }
+  .slide .split-media img { width: 100%; height: 100%; object-fit: contain; }
+  .slide--image .full-figure img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
+  .slide--dense ul { font-size: 0.88em; }
+  /* Sub-bullets: smaller and tighter so the parent points stay dominant */
+  .slide li > ul { font-size: 0.85em; margin: 0.25em 0 0; }
+  .slide li li { margin-bottom: 0.2em; }
+  /* ---------- Controls ---------- */
+  .controls {
+    position: fixed; right: 1rem; top: 1rem;   /* top right: empty on every layout */
+    display: flex; gap: 0.4rem; align-items: center;
+    background: rgba(0, 0, 0, 0.7); color: #ffffff;
+    padding: 0.35rem 0.5rem; border-radius: 0.4rem;
+    font-size: 0.9rem;
+    opacity: 0.35; transition: opacity 0.2s;
+  }
+  .controls:hover, .controls:focus-within { opacity: 1; }
+  .controls button {
+    font: inherit; color: #ffffff; background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 0.3rem;
+    padding: 0.25rem 0.6rem; cursor: pointer;
+  }
+  .controls .counter { min-width: 4.5em; text-align: center; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .controls button:focus-visible { outline-color: #ffffff; }
+
+  .visually-hidden {
+    position: fixed !important; top: 0; left: 0;   /* fixed: never adds page scroll */
+    width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+
+  /* Slide view never scrolls: the slide always fits the window.
+     (Handout view scrolls normally.) */
+  body:not(.handout) { overflow: hidden; }
+
+  /* ---------- Handout view: all slides as tiles ---------- */
+  /* Click a tile (or its "Go to slide" button) to present from that slide. */
+  body.handout {
+    --cols: 3;
+    --gap: 1.5rem;
+    --slide-w: calc((100vw - 4rem - 20px - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  }
+  @media (max-width: 1100px) { body.handout { --cols: 2; } }
+  @media (max-width: 700px)  { body.handout { --cols: 1; } }
+  body.handout .deck {
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), var(--slide-w));
+    gap: var(--gap);
+    justify-content: center;
+    padding: 4rem 2rem 2rem;
+  }
+  body.handout .slide {
+    box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  body.handout .slide[hidden] { display: flex; }
+  body.handout .slide:hover { outline: 3px solid #ffffff; }
+
+  /* "Go to slide N" button on each tile (handout view only) */
+  .tile-go { display: none; }
+  body.handout .tile-go {
+    display: block;
+    position: absolute; top: 0.5rem; left: 0.5rem; z-index: 2;
+    font: 600 0.8rem var(--font);
+    color: #ffffff; background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 0.3rem;
+    padding: 0.2rem 0.5rem; cursor: pointer;
+  }
+  body.handout .tile-go:focus-visible { outline: 3px solid #ffffff; }
+
+  /* ---------- Print: one slide per page ---------- */
+  @media print {
+    @page { size: landscape; margin: 0; }
+    :root, body.handout { --slide-w: 100vw; }
+    .tile-go { display: none !important; }
+    body { background: #ffffff; }
+    .controls { display: none; }
+    .deck, body.handout .deck { height: auto; display: block; padding: 0; }
+    .slide, .slide[hidden], body.handout .slide[hidden] {
+      display: flex; width: 100vw; break-after: page; box-shadow: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck">
+
+  <!-- [01] -->
+  <section class="slide slide--title" aria-labelledby="s01">
+    <h1 id="s01">Accessible Media: Beyond the Checker</h1>
+    <p class="subtitle">Why passing an accessibility checker is not the same as being accessible</p>
+    <div class="meta">
+      <p>Gerry Pedraza</p>
+      <p>Engineering Studio for Advanced Instruction and Learning (eSAIL), Texas A&amp;M University</p>
+      <p>Last updated: 10/23/26</p>
+    </div>
+  </section>
+
+  <!-- [02] -->
+  <section class="slide slide--dense" aria-labelledby="s02">
+    <h2 id="s02">Objectives</h2>
+    <ul>
+      <li>Explain what accessibility means for distributed course media and why it is required</li>
+      <li>Identify the purpose of the building blocks of an accessible document: headings, reading order, alt text, tables and equations</li>
+      <li>Explain why PDFs, and LaTeX-created files in particular, are harder to make accessible, and what PDF 2.0 changes</li>
+      <li>Analyze how accessibility checkers work: why a document can pass and still fail students, or be flagged when it is correct</li>
+      <li>Distinguish technical compliance from instructional design in documents and video</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Introduction</span></div>
+  </section>
+
+  <!-- [03] -->
+  <section class="slide slide--agenda" aria-labelledby="s03">
+    <h2 id="s03">Agenda</h2>
+    <ol>
+      <li>What Accessibility Is and Why It Matters</li>
+      <li>Standards</li>
+      <li>Structure: What Makes a Document Accessible</li>
+      <li>Why Equations in PDFs Are Harder</li>
+      <li>What Checkers Can and Can't Do</li>
+      <li>Designing for Meaning</li>
+    </ol>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Agenda</span></div>
+  </section>
+
+  <!-- [04] -->
+  <section class="slide slide--chapter-image" aria-labelledby="s04">
+    <img class="bg" src="images/student-using-screen-reader.jpg" alt="">
+    <div class="chapter-content">
+      <p class="chapter-number">Part 1</p>
+      <h2 id="s04">What Accessibility Is and Why It Matters</h2>
+      <p class="chapter-lead">What we mean by accessibility, what the law asks, and how we get there.</p>
+    </div>
+  </section>
+
+  <!-- [05] -->
+  <section class="slide" aria-labelledby="s05">
+    <h2 id="s05">What Is Accessibility?</h2>
+    <ul>
+      <li>The same information, through an equally effective experience, with comparable ease</li>
+      <li>Who it serves: blind and low-vision students, dyslexia, motor disabilities, deaf and hard of hearing, students on phones, students who never disclose, all of us</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
+  </section>
+
+  <!-- [06] -->
+  <section class="slide" aria-labelledby="s06">
+    <h2 id="s06">The Goal: Equal Access</h2>
+    <ul>
+      <li>ADA Title II: no one excluded from a public university's programs because of a disability</li>
+      <li>DOJ rule (April 2024) sets the technical bar: <a href="https://www.w3.org/TR/WCAG21/">WCAG 2.1 Level AA</a></li>
+      <li>Covers what we offer students online: web pages, documents, and videos</li>
+      <li>Deadline extended to April 26, 2027; requirements unchanged</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
+  </section>
+
+  <!-- [07] -->
+  <section class="slide" aria-labelledby="s07">
+    <h2 id="s07">How We Get There: Every Document Must Be Prepared</h2>
+    <ul>
+      <li>Word, PowerPoint, PDF, LaTeX, and video: accessibility is built in while authoring, not added at the end</li>
+      <li>Accommodation is reactive and individual; accessibility is proactive and benefits everyone</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
+  </section>
+
+  <!-- [08] -->
+  <section class="slide slide--image" aria-labelledby="s08">
+    <h2 id="s08">Three Layers: Standards, Structure, Design</h2>
+      <figure class="full-figure">
+        <img src="images/three-layers.svg" alt="Standards contain the document structure; design sits outside the standards and shapes that structure.">
+      </figure>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
+  </section>
+
+  <!-- [09] -->
+  <section class="slide slide--chapter" aria-labelledby="s09">
+    <p class="chapter-number">Part 2</p>
+    <h2 id="s09">Standards</h2>
+  </section>
+
+  <!-- [10] -->
+  <section class="slide" aria-labelledby="s10">
+    <h2 id="s10">WCAG: The Measuring Stick</h2>
+    <ul>
+      <li>Perceivable: can they get the content? (a graph has alt text; a video has captions)</li>
+      <li>Operable: can they move through it? (jump by headings, use only a keyboard)</li>
+      <li>Understandable: does it make sense? (clear headings, consistent layout, notation explained)</li>
+      <li>Robust: does it work with their tools? (real tags a screen reader can read)</li>
+    </ul>
+    <div class="info-banner" role="note">
+      <span class="info-icon" aria-hidden="true">i</span>
+      <p><a href="https://www.w3.org/TR/WCAG21/">WCAG 2.1 details on the W3C website</a></p>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 2</span></div>
+  </section>
+
+  <!-- [11] -->
+  <section class="slide" aria-labelledby="s11">
+    <h2 id="s11">Document Standards: How a PDF Meets WCAG</h2>
+    <ul>
+      <li>WCAG says what a student must be able to do; PDF/UA (Universal Accessibility) says how a PDF makes it possible</li>
+      <li>PDF/UA-1 builds on PDF 1.7; PDF/UA-2 builds on PDF 2.0
+        <ul>
+          <li>PDF 2.0 is the file format: it makes accessibility possible but doesn't require it</li>
+          <li>PDF/UA-2 is the rulebook: tags, alt text, a title, and a language are required</li>
+          <li>A PDF 2.0 file isn't automatically PDF/UA-2: the materials are not the building code</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 2</span></div>
+  </section>
+
+  <!-- [12] -->
+  <section class="slide" aria-labelledby="s12">
+    <h2 id="s12">Design the Source, Don't Patch the PDF</h2>
+    <ul>
+      <li>Accessibility is decided when you write the Word, PowerPoint, or LaTeX file</li>
+      <li>Fixing a finished PDF is slow, and every fix is lost when you re-export</li>
+      <li>Ally creates alternative formats but never changes your original file</li>
+      <li>The same inaccessible file carries into every future semester</li>
+      <li>Fix it once in the source, and it stays fixed</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 2</span></div>
+  </section>
+
+  <!-- [13] -->
+  <section class="slide slide--chapter" aria-labelledby="s13">
+    <p class="chapter-number">Part 3</p>
+    <h2 id="s13">Structure: What Makes a Document Accessible</h2>
+  </section>
+
+  <!-- [14] -->
+  <section class="slide" aria-labelledby="s14">
+    <h2 id="s14">The Building Blocks</h2>
+    <div class="split">
+      <div class="split-text">
+    <ul>
+      <li>Headings in a logical hierarchy</li>
+      <li>Reading order that matches the meaning</li>
+      <li>Real lists and tables with header cells</li>
+      <li>Alt text for images; artifacts for decoration</li>
+      <li>Equations as MathML, not pictures</li>
+    </ul>
+      </div>
+      <figure class="split-media">
+        <img src="images/building-blocks.svg" alt="A math handout with each part tagged: H1, H2, list, formula as MathML, table with headers, figure with alt text, artifact.">
+      </figure>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 3</span></div>
+  </section>
+
+  <!-- [15] -->
+  <section class="slide slide--chapter" aria-labelledby="s15">
+    <p class="chapter-number">Part 4</p>
+    <h2 id="s15">Why Equations in PDFs Are Harder</h2>
+  </section>
+
+  <!-- [16] -->
+  <section class="slide" aria-labelledby="s16">
+    <h2 id="s16">PDF Was Built for Print</h2>
+    <div class="split">
+      <div class="split-text">
+    <ul>
+      <li>PDF describes where ink goes on a page; structure was added later through tags</li>
+      <li>PDF 2.0 rebuilt that structure, which is what makes real math possible</li>
+    </ul>
+      </div>
+      <figure class="split-media">
+        <img src="images/print-vs-structure.svg" alt="The same math handout twice: as printed ink, then as tags that label each part and number the reading order.">
+      </figure>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 4</span></div>
+  </section>
+
+  <!-- [17] -->
+  <section class="slide" aria-labelledby="s17">
+    <h2 id="s17">Equations: Pictures or Structure</h2>
+    <ul>
+      <li>As a picture with alt text: one flat sentence, nothing to navigate</li>
+      <li>As MathML: read and navigate term by term, in speech or braille</li>
+      <li>PDF/UA-2 requires math as MathML; PDF/UA-1 only allowed alt text</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 4</span></div>
+  </section>
+
+  <!-- [18] -->
+  <section class="slide" aria-labelledby="s18">
+    <h2 id="s18">LaTeX: A Preamble Makes the Difference</h2>
+    <ul>
+      <li>LaTeX output is a PDF, so it inherits PDF's challenges</li>
+      <li>A preamble based on the LaTeX Tagging Project turns on the tags assistive technology uses</li>
+      <li>Template available in the resources at the end</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 4</span></div>
+  </section>
+
+  <!-- [19] -->
+  <section class="slide slide--chapter" aria-labelledby="s19">
+    <p class="chapter-number">Part 5</p>
+    <h2 id="s19">What Checkers Can and Can't Do</h2>
+  </section>
+
+  <!-- [20] -->
+  <section class="slide" aria-labelledby="s20">
+    <h2 id="s20">How Checkers Work</h2>
+    <div class="split">
+      <div class="split-text">
+    <ul>
+      <li>They find items and test them against rules</li>
+      <li>They can tell that alt text exists, not whether it is useful</li>
+    </ul>
+      </div>
+      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>a robot ticking boxes on a checklist</div>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+  </section>
+
+  <!-- [21] -->
+  <section class="slide" aria-labelledby="s21">
+    <h2 id="s21">Checkers and PDF 2.0</h2>
+    <ul>
+      <li>Ally, Panorama and Acrobat do not fully support PDF 2.0 / UA-2 (vendor-confirmed)</li>
+      <li>Result: false flags in both directions</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+  </section>
+
+  <!-- [22] -->
+  <section class="slide" aria-labelledby="s22">
+    <h2 id="s22">Passes the Checker, Fails the Student: Reading Order</h2>
+    <div class="split">
+      <div class="split-text">
+    <ul>
+      <li>A PowerPoint exported to PDF: every element tagged, read in the wrong sequence</li>
+    </ul>
+      </div>
+      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>a slide with numbered arrows jumping around</div>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+  </section>
+
+  <!-- [23] -->
+  <section class="slide" aria-labelledby="s23">
+    <h2 id="s23">Passes the Checker, Fails the Student: Headings</h2>
+    <div class="split">
+      <div class="split-text">
+    <ul>
+      <li>A Word document jumping from Heading 1 to Heading 3 misleads users about the hierarchy</li>
+    </ul>
+      </div>
+      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>a staircase with a missing step</div>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+  </section>
+
+  <!-- [24] -->
+  <section class="slide" aria-labelledby="s24">
+    <h2 id="s24">Passes the Checker, Fails the Student: Alt Text</h2>
+    <ul>
+      <li>"A parabola": present, passing, and empty of instructional value</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+  </section>
+
+  <!-- [25] -->
+  <section class="slide" aria-labelledby="s25">
+    <h2 id="s25">Fails the Checker, Serves the Student: PDF 2.0</h2>
+    <ul>
+      <li>A correct PDF/UA-2 document with MathML flagged as missing alt text</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+  </section>
+
+  <!-- [26] -->
+  <section class="slide slide--bleed" aria-labelledby="s26">
+    <img class="bleed-image" src="images/background.jpg" alt="">
+    <div class="key-phrase">
+      <h2 id="s26">A checker can tell you it's tagged, not that it makes sense</h2>
+    </div>
+  </section>
+
+  <!-- [27] -->
+  <section class="slide slide--chapter" aria-labelledby="s27">
+    <p class="chapter-number">Part 6</p>
+    <h2 id="s27">Designing for Meaning</h2>
+  </section>
+
+  <!-- [28] -->
+  <section class="slide" aria-labelledby="s28">
+    <h2 id="s28">Alt Text That Teaches</h2>
+    <div class="split">
+      <div class="split-text">
+    <ul>
+      <li>"A parabola" vs. "the vertex at (2, -1) is the minimum, which is the point of this example"</li>
+    </ul>
+      </div>
+      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>the same parabola with two captions side by side</div>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
+  </section>
+
+  <!-- [29] -->
+  <section class="slide" aria-labelledby="s29">
+    <h2 id="s29">Short Alt Text, Detailed Extended Description</h2>
+    <ul>
+      <li>Keep alt text to about 120-150 characters; screen readers read it in one go</li>
+      <li>Put details in a linked extended description; a tagged data table for charts</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
+  </section>
+
+  <!-- [30] -->
+  <section class="slide" aria-labelledby="s30">
+    <h2 id="s30">Video: Captions and Description</h2>
+    <ul>
+      <li>Accurate captions: review auto-captions, especially math and technical terms</li>
+      <li>Gold standard: a dedicated audio description track, written and voiced by trained describers</li>
+      <li>Practical path: describe as you go; it is a skill that takes practice, and it can meet the requirement</li>
+      <li>Say what is on screen and why it matters: replace "as you can see here" with the instructional point</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
+  </section>
+
+  <!-- [31] -->
+  <section class="slide" aria-labelledby="s31">
+    <h2 id="s31">Video: On-Screen Content</h2>
+    <ul>
+      <li>On-screen text: large (about 24 pt or more), high contrast, clear of the caption area</li>
+      <li>Complex content (tables, charts, reference data): provide an accessible version as an attachment, and mention it aloud</li>
+      <li>A textbook page reference works only if the student has an accessible copy</li>
+      <li>Still say the key takeaway aloud</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
+  </section>
+
+  <!-- [32] -->
+  <section class="slide slide--bleed" aria-labelledby="s32">
+    <img class="bleed-image" src="images/background.jpg" alt="">
+    <div class="key-phrase">
+      <h2 id="s32">Tags make content reachable; design makes it meaningful</h2>
+    </div>
+  </section>
+
+  <!-- [33] -->
+  <section class="slide" aria-labelledby="s33">
+    <h2 id="s33">Where to Start</h2>
+    <ul>
+      <li>New and active course materials first, then syllabi and frequently used documents</li>
+      <li>Check with a screen reader, not only a checker</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
+  </section>
+
+  <!-- [34] -->
+  <section class="slide slide--conclusion" aria-labelledby="s34">
+    <h2 id="s34">Conclusion</h2>
+    <ul>
+      <li>Accessibility is prepared, not patched</li>
+      <li>Checkers find items; people judge meaning</li>
+      <li>Design for the student, not the score</li>
+    </ul>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
+  </section>
+
+  <!-- [35] -->
+  <section class="slide slide--contact" aria-labelledby="s35">
+    <h2 id="s35">Resources and Contact</h2>
+    <dl>
+      <dt>Accessible LaTeX template</dt>
+      <dd><a href="https://github.com/gerrypedraza/latex-pdf-ua2">github.com/gerrypedraza/latex-pdf-ua2</a></dd>
+      <dt>Suggestions or problems</dt>
+      <dd><a href="https://github.com/gerrypedraza/latex-pdf-ua2/issues">Open an issue on the repository</a></dd>
+      <dt>Beamer to LTX Converter</dt>
+      <dd><a href="https://beam2ltx.gerrypedraza.com/">beam2ltx.gerrypedraza.com</a></dd>
+      <dt>LaTeX Tagging Project</dt>
+      <dd><a href="https://latex3.github.io/tagging-project/">latex3.github.io/tagging-project</a></dd>
+      <dt>Support</dt>
+      <dd>eSAIL and disability resources</dd>
+    </dl>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
+  </section>
+
+  <!-- [36] -->
+  <section class="slide slide--thanks" aria-labelledby="s36">
+    <h2 id="s36">Thank You</h2>
+    <p>Questions?</p>
+  </section>
+
+</main>
+
+<nav class="controls" aria-label="Slide controls">
+  <button type="button" id="prev" aria-label="Previous slide">&larr;</button>
+  <span class="counter" id="counter" aria-hidden="true">1 / 1</span>
+  <button type="button" id="next" aria-label="Next slide">&rarr;</button>
+  <button type="button" id="handout" aria-pressed="false">Handout view</button>
+  <button type="button" id="glossary-open" aria-haspopup="dialog">Glossary</button>
+</nav>
+
+<!-- Glossary: opened with G or the Glossary button. Group terms under <h3>s. -->
+<dialog class="glossary" id="glossary" aria-labelledby="glossary-title">
+  <div class="glossary-head">
+    <h2 id="glossary-title">Glossary</h2>
+    <label for="glossary-filter">Find a term</label>
+    <input type="search" id="glossary-filter" autocomplete="off">
+    <button type="button" class="glossary-close" id="glossary-close">Close</button>
+  </div>
+  <div class="glossary-body" id="glossary-body">
+    <h3>People and the tools they use</h3>
+    <dl>
+      <div class="term"><dt>Disability (in this talk)</dt>
+        <dd>Any condition that affects how a person sees, hears, moves, reads, or processes information. It can be permanent, temporary (a broken wrist), or situational (a noisy room, a phone screen in sunlight). Many students never disclose one.</dd></div>
+      <div class="term"><dt>Assistive technology (AT)</dt>
+        <dd>Hardware or software that a person with a disability uses to do what others do without it. It sits between the person and the content: it changes how the content is presented (spoken, enlarged, in braille) or how the person controls the computer (voice, keyboard, a switch). AT can only work with what the document gives it, so a document has to be built so AT can read it.</dd></div>
+      <div class="term"><dt>Screen reader</dt>
+        <dd>Assistive technology, mostly used by people who are blind or have low vision, that turns what is on the screen into speech or braille. It is called assistive technology because it replaces seeing the screen: instead of scanning a page with their eyes, the user listens and jumps by headings, links, lists, tables, and equations. It can only announce structure the document actually contains. Examples: NVDA, JAWS, VoiceOver.</dd></div>
+      <div class="term"><dt>NVDA</dt>
+        <dd>A free, open-source screen reader for Windows from NV Access, widely used and a good one for testing your own documents. Since version 2026.1 it reads math with MathCAT built in. Its Speech Viewer shows on screen what it is saying.</dd></div>
+      <div class="term"><dt>JAWS</dt>
+        <dd>A commercial screen reader for Windows, common in workplaces and universities.</dd></div>
+      <div class="term"><dt>VoiceOver</dt>
+        <dd>The screen reader built into Apple devices (Mac, iPhone, iPad).</dd></div>
+      <div class="term"><dt>Refreshable braille display</dt>
+        <dd>A device with small pins that rise and fall to form braille characters, showing a line of text at a time. Screen readers send text to it; for math, MathML can be shown in Nemeth or UEB braille.</dd></div>
+      <div class="term"><dt>Screen magnifier</dt>
+        <dd>Software that enlarges part of the screen for people with low vision. Text that reflows and stays sharp works far better than text inside a picture.</dd></div>
+      <div class="term"><dt>Text-to-speech (read aloud)</dt>
+        <dd>Software that reads text aloud, used by many students with dyslexia or attention difficulties who can see the page. It also depends on correct reading order.</dd></div>
+      <div class="term"><dt>Speech recognition (voice control)</dt>
+        <dd>Software that lets a person control the computer and write by speaking, often used by people with motor disabilities.</dd></div>
+      <div class="term"><dt>Keyboard-only navigation</dt>
+        <dd>Using a computer without a mouse, with Tab, arrows, and Enter. Everything that can be clicked must also be reachable and usable with the keyboard.</dd></div>
+    </dl>
+    <h3>Law and policy</h3>
+    <dl>
+      <div class="term"><dt>ADA Title II</dt>
+        <dd>The part of the Americans with Disabilities Act that covers state and local governments, including public universities. It says no one can be excluded from their programs and services because of a disability.</dd></div>
+      <div class="term"><dt>DOJ rule (April 2024)</dt>
+        <dd>The Department of Justice regulation that sets the technical standard for Title II web content and mobile apps: WCAG 2.1 Level AA. It covers what we offer students online: web pages, documents, and videos. The compliance date was extended to April 26, 2027; the requirements did not change.</dd></div>
+      <div class="term"><dt>Accommodation</dt>
+        <dd>An individual adjustment made after a student requests it, such as extra time or a converted file. It is reactive and arrives late.</dd></div>
+      <div class="term"><dt>Accessibility</dt>
+        <dd>Building content so it works for people with disabilities from the start, without a special request. It is proactive and benefits everyone.</dd></div>
+      <div class="term"><dt>Equally effective</dt>
+        <dd>The legal idea behind access: a student with a disability gets the same information, through an equally effective experience, with comparable ease. Not identical, but not worse.</dd></div>
+    </dl>
+    <h3>Standards</h3>
+    <dl>
+      <div class="term"><dt>WCAG (Web Content Accessibility Guidelines)</dt>
+        <dd>The international standard, from the W3C, for making digital content accessible. Version 2.1 has 4 principles, 13 guidelines, and 78 testable success criteria. Despite the name, it applies to documents and video too. <a href="https://www.w3.org/TR/WCAG21/">Read WCAG 2.1</a></dd></div>
+      <div class="term"><dt>POUR</dt>
+        <dd>The four WCAG principles. Content must be Perceivable (can be seen, heard, or felt), Operable (can be used, for example by keyboard), Understandable (clear and predictable), and Robust (works with current and future assistive technology).</dd></div>
+      <div class="term"><dt>Success criterion</dt>
+        <dd>One testable requirement in WCAG, for example "text contrast of at least 4.5:1." Each has a level.</dd></div>
+      <div class="term"><dt>Levels A, AA, AAA</dt>
+        <dd>WCAG conformance levels. A is the minimum, AA is the level the law requires (it includes all of A), and AAA is the highest and is not expected for whole sites.</dd></div>
+      <div class="term"><dt>Contrast ratio</dt>
+        <dd>How different the text color is from its background, from 1:1 (none) to 21:1 (black on white). WCAG AA asks for at least 4.5:1 for normal text and 3:1 for large text.</dd></div>
+      <div class="term"><dt>PDF 1.7 and PDF 2.0</dt>
+        <dd>Versions of the PDF file format. PDF 1.7 (ISO 32000-1) is what most tools still produce; accessibility was added to it through tags. PDF 2.0 (ISO 32000-2) redesigns that structure, for example so a file can carry real math structure (MathML).</dd></div>
+      <div class="term"><dt>PDF/UA (Universal Accessibility)</dt>
+        <dd>The ISO standard that says how a PDF must be built so assistive technology can use it. WCAG says what a student must be able to do; PDF/UA says how a PDF makes it possible. The law names WCAG, not PDF/UA, but PDF/UA is the technical route for PDFs.</dd></div>
+      <div class="term"><dt>PDF/UA-1</dt>
+        <dd>The first version (ISO 14289-1), built on PDF 1.7. Most checkers test against it.</dd></div>
+      <div class="term"><dt>PDF/UA-2</dt>
+        <dd>The newer version (ISO 14289-2, 2024), built on PDF 2.0, with better support for math and modern structure. Many checkers do not support it yet.</dd></div>
+    </dl>
+    <h3>Document structure</h3>
+    <dl>
+      <div class="term"><dt>Tags (tagged PDF)</dt>
+        <dd>Hidden labels inside a PDF that say what each piece of content is: a heading, a paragraph, a list, a table, a figure, a formula. Screen readers read the tags, not the look of the page. A PDF without tags is, to a screen reader, an unstructured pile of text or nothing at all.</dd></div>
+      <div class="term"><dt>Structure tree</dt>
+        <dd>The full set of tags, nested in order like an outline of the document. It is what assistive technology navigates.</dd></div>
+      <div class="term"><dt>Reading order</dt>
+        <dd>The order in which assistive technology reads the content. It must follow the logical order (title, then text, then figure and caption), not the order things were drawn on the page.</dd></div>
+      <div class="term"><dt>Headings and heading levels</dt>
+        <dd>Titles marked as headings (level 1, 2, 3...) rather than just made bold and large. Screen reader users jump from heading to heading to skim, so the levels must not skip (a level 3 directly under a level 1 is a missing step).</dd></div>
+      <div class="term"><dt>Alt text (alternative text)</dt>
+        <dd>A short text replacement for an image, read by screen readers in place of the picture. It should say what the image means in this context, in about 120 to 150 characters at most, not describe every pixel.</dd></div>
+      <div class="term"><dt>Extended description</dt>
+        <dd>A longer explanation of a complex image (a chart, a diagram, a proof figure), placed in the text, in an appendix, or linked. Used when alt text alone cannot carry the information.</dd></div>
+      <div class="term"><dt>Decorative image / artifact</dt>
+        <dd>Content that adds no information, such as a divider line, a background, or a page number. It is marked as an artifact (in PDF) or given empty alt text (alt="") so screen readers skip it instead of reading noise.</dd></div>
+      <div class="term"><dt>Table headers</dt>
+        <dd>Cells marked as row or column headers so a screen reader can say "Week 3, Topic: Limits" while moving through a table instead of reading bare numbers.</dd></div>
+      <div class="term"><dt>Document title and language</dt>
+        <dd>Metadata that tells assistive technology what the document is called and what language to speak it in. A wrong language makes the screen reader mispronounce everything.</dd></div>
+      <div class="term"><dt>Link text</dt>
+        <dd>The words that are a link. They should say where the link goes ("WCAG 2.1 on the W3C website"), because screen reader users often list all links out of context; "click here" means nothing there.</dd></div>
+    </dl>
+    <h3>Math</h3>
+    <dl>
+      <div class="term"><dt>MathML</dt>
+        <dd>A standard way to write math as structure (fractions, exponents, roots, subscripts) rather than as a picture. With MathML a screen reader can read an equation aloud correctly, let the student move through it term by term, and show it in braille.</dd></div>
+      <div class="term"><dt>MathCAT</dt>
+        <dd>Open-source software that turns MathML into clear speech, braille (Nemeth and UEB), and step-by-step navigation. It is built into NVDA.</dd></div>
+      <div class="term"><dt>Equation as an image</dt>
+        <dd>Math saved as a picture, with alt text at best. The student hears one flat sentence and cannot explore the parts, which is hard for anything longer than a short formula.</dd></div>
+      <div class="term"><dt>MathJax</dt>
+        <dd>Software that displays math on web pages from LaTeX or MathML, with built-in accessibility (speech and exploration of expressions). Common in web-based course materials.</dd></div>
+    </dl>
+    <h3>LaTeX</h3>
+    <dl>
+      <div class="term"><dt>LaTeX Tagging Project</dt>
+        <dd>The LaTeX team's ongoing project to make LaTeX produce tagged, accessible PDF directly. Turned on with <code>\DocumentMetadata</code> at the top of the file. <a href="https://latex3.github.io/tagging-project/">Project website</a></dd></div>
+      <div class="term"><dt><code>\DocumentMetadata</code></dt>
+        <dd>The first line of a modern accessible LaTeX file. It sets the PDF version, the PDF/UA standard, and turns on tagging.</dd></div>
+      <div class="term"><dt>LuaLaTeX</dt>
+        <dd>The LaTeX engine recommended for tagged PDF, because it can attach MathML to equations and handles Unicode fonts.</dd></div>
+      <div class="term"><dt>Preamble</dt>
+        <dd>The setup section at the top of a LaTeX file, before <code>\begin{document}</code>. The accessible template is a preamble you reuse; your content goes after it.</dd></div>
+    </dl>
+    <h3>Checking</h3>
+    <dl>
+      <div class="term"><dt>Accessibility checker</dt>
+        <dd>Software that tests a document against rules a computer can verify, such as "every image has alt text" or "tags exist." It cannot judge meaning: whether the alt text is right, whether the reading order makes sense, or whether an equation reads well. Passing a checker is a starting point, not proof of access.</dd></div>
+      <div class="term"><dt>Machine-verifiable vs. human judgment</dt>
+        <dd>Some requirements can be tested automatically (is there a title?), and others need a person (is the title accurate?). Checkers cover only the first kind.</dd></div>
+      <div class="term"><dt>Ally</dt>
+        <dd>An accessibility checker built into the learning management system (Canvas at many schools) that scores course files and offers alternative formats. It does not support PDF/UA-2.</dd></div>
+      <div class="term"><dt>YuJa Panorama</dt>
+        <dd>Another accessibility checker built into the learning management system. It does not support PDF/UA-2.</dd></div>
+      <div class="term"><dt>Adobe Acrobat Accessibility Checker</dt>
+        <dd>The checker built into Acrobat Pro, which can also edit tags and reading order. It does not support PDF/UA-2.</dd></div>
+      <div class="term"><dt>PAC (PDF Accessibility Checker)</dt>
+        <dd>A free Windows tool from axes4 that checks PDFs against PDF/UA and WCAG and can preview the structure as a screen reader would meet it.</dd></div>
+      <div class="term"><dt>veraPDF</dt>
+        <dd>A free, open-source validator for PDF standards, including PDF/UA-1 and PDF/UA-2. It checks only the machine-verifiable rules.</dd></div>
+    </dl>
+    <h3>Video</h3>
+    <dl>
+      <div class="term"><dt>Captions</dt>
+        <dd>Text of everything spoken and of important sounds, synchronized with the video. Needed by deaf and hard of hearing students and used by many others. Automatic captions must be corrected, especially for math.</dd></div>
+      <div class="term"><dt>Transcript</dt>
+        <dd>All the spoken words (and important sounds) as a text document. Useful for review and search, but not a replacement for captions in a video.</dd></div>
+      <div class="term"><dt>Audio description</dt>
+        <dd>Narration that describes important visual information the audio alone does not explain, such as an equation written on the board without being read aloud. The easiest way to avoid needing it is to say what you write and show.</dd></div>
+    </dl>
+  </div>
+  <p class="visually-hidden" id="glossary-status" role="status" aria-live="polite"></p>
+</dialog>
+
+<!-- Announces each slide change to screen readers -->
+<div class="visually-hidden" id="status" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const counter = document.getElementById('counter');
+  const status = document.getElementById('status');
+  const handoutBtn = document.getElementById('handout');
+  let current = 0;
+
+  function titleOf(slide) {
+    const h = slide.querySelector('h1, h2');
+    return h ? h.textContent.trim() : '';
+  }
+
+  function show(n, moveFocus) {
+    current = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, i) => { s.hidden = (i !== current); });
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    status.textContent = 'Slide ' + (current + 1) + ' of ' + slides.length + ': ' + titleOf(slides[current]);
+    history.replaceState(null, '', '#' + (current + 1));
+    if (moveFocus) {
+      const h = slides[current].querySelector('h1, h2');
+      if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }
+  }
+
+  // Code blocks: split into numbered lines and highlight LaTeX
+  // (\commands, % comments, braces). Plain text stays readable without it.
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function highlightLatex(line) {
+    let out = '', i = 0;
+    const re = /(\\%)|(%.*$)|(\\[A-Za-z@]+|\\.)|([{}\[\]])/g;
+    let m;
+    while ((m = re.exec(line))) {
+      out += esc(line.slice(i, m.index));
+      if (m[1]) out += esc(m[1]);
+      else if (m[2]) out += '<span class="tok-com">' + esc(m[2]) + '</span>';
+      else if (m[3]) out += '<span class="tok-cmd">' + esc(m[3]) + '</span>';
+      else out += '<span class="tok-brace">' + esc(m[4]) + '</span>';
+      i = re.lastIndex;
+    }
+    return out + esc(line.slice(i));
+  }
+  document.querySelectorAll('pre.code > code').forEach((code) => {
+    const latex = code.parentElement.classList.contains('lang-latex');
+    code.innerHTML = code.textContent.split('\n').map((l) =>
+      '<span class="ln">' + (latex ? highlightLatex(l) : esc(l)) + '\n</span>'
+    ).join('');
+  });
+
+  function setHandout(on) {
+    document.body.classList.toggle('handout', on);
+    handoutBtn.setAttribute('aria-pressed', String(on));
+    handoutBtn.textContent = on ? 'Slide view' : 'Handout view';
+    if (on) {
+      slides.forEach(s => { s.hidden = false; });
+      counter.textContent = 'All';
+      status.textContent = 'Handout view: all ' + slides.length + ' slides shown';
+      slides[current].scrollIntoView({ block: 'center' });
+    } else {
+      show(current, true);
+    }
+  }
+
+  // Handout view: a "Go to slide N" button on each tile, and click-to-present
+  function present(i) { setHandout(false); show(i, true); }
+  slides.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tile-go';
+    b.textContent = 'Slide ' + (i + 1);
+    b.setAttribute('aria-label', 'Go to slide ' + (i + 1) + ': ' + titleOf(s));
+    b.addEventListener('click', (e) => { e.stopPropagation(); present(i); });
+    s.prepend(b);
+    s.addEventListener('click', (e) => {
+      if (!document.body.classList.contains('handout')) return;
+      if (e.target.closest('a')) return;   // let links inside a slide work
+      present(i);
+    });
+  });
+
+  // In handout view, Previous/Next return to slide view first
+  function step(d) {
+    if (document.body.classList.contains('handout')) { present(current + d); }
+    else { show(current + d, false); }
+  }
+  document.getElementById('prev').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  handoutBtn.addEventListener('click', () => setHandout(!document.body.classList.contains('handout')));
+
+  // Glossary dialog (G key or button). Native <dialog>: Esc closes it,
+  // focus stays inside while open, and returns to where it was on close.
+  const glossary = document.getElementById('glossary');
+  const gFilter = document.getElementById('glossary-filter');
+  const gStatus = document.getElementById('glossary-status');
+  function openGlossary() {
+    if (glossary.open) return;
+    glossary.showModal();
+    gFilter.focus();
+  }
+  document.getElementById('glossary-open').addEventListener('click', openGlossary);
+  document.getElementById('glossary-close').addEventListener('click', () => glossary.close());
+  glossary.addEventListener('click', (e) => { if (e.target === glossary) glossary.close(); });
+  // Esc always closes (in a search box, browsers would otherwise just clear the text)
+  glossary.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); glossary.close(); } });
+  gFilter.addEventListener('input', () => {
+    const q = gFilter.value.trim().toLowerCase();
+    let shown = 0;
+    glossary.querySelectorAll('.term').forEach((t) => {
+      const hit = !q || t.textContent.toLowerCase().includes(q);
+      t.hidden = !hit; if (hit) shown++;
+    });
+    // Hide group headings with no matching terms
+    glossary.querySelectorAll('.glossary-body h3').forEach((h) => {
+      const dl = h.nextElementSibling;
+      h.hidden = dl && ![...dl.querySelectorAll('.term')].some((t) => !t.hidden);
+    });
+    gStatus.textContent = q ? shown + (shown === 1 ? ' term' : ' terms') + ' found' : '';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (glossary.open) return;                       // keys belong to the glossary while it is open
+    const onControl = e.target.closest('button, a, input, textarea, select');
+    // Inside a focused code panel, scrolling keys scroll the panel
+    if (e.target.closest('pre.code') &&
+        ['PageUp', 'PageDown', ' ', 'Home', 'End'].includes(e.key)) return;
+    if (e.key === 'g' || e.key === 'G') { openGlossary(); e.preventDefault(); return; }
+    if (e.key === 'h' || e.key === 'H') { setHandout(!document.body.classList.contains('handout')); return; }
+    if (document.body.classList.contains('handout')) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'PageDown':
+        show(current + 1, true); e.preventDefault(); break;
+      case ' ':
+        if (onControl) return;
+        show(current + 1, true); e.preventDefault(); break;
+      case 'ArrowLeft': case 'PageUp':
+        show(current - 1, true); e.preventDefault(); break;
+      case 'Home': show(0, true); e.preventDefault(); break;
+      case 'End': show(slides.length - 1, true); e.preventDefault(); break;
+    }
+  });
+
+  // Start on the slide in the URL (e.g. index.html#5), or the first slide
+  const start = parseInt(location.hash.slice(1), 10);
+  show(Number.isNaN(start) ? 0 : start - 1, false);
+})();
+</script>
+</body>
+</html>
