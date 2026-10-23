@@ -13,4 +13,4 @@ The slides are plain HTML, built to be accessible: real headings and lists, alt 
 ## Templates & Examples
 
 - [LaTeX Accessible Template](templates-and-examples/latex/latex-accessible-template.tex): a LaTeX preamble that produces a tagged PDF 2.0 file meeting PDF/UA-2, with equations stored as MathML. Start your document from it and compile with LuaLaTeX (on Overleaf, choose the Rolling TeX Live version).
-- [Accessible Template Example In Use](templates-and-examples/latex/accessible-template-example-in-use.tex): a full document built on the template, with headings, lists, tables, figures with alt text, equations, and decorative content. Upload it together with its [images](templates-and-examples/latex/images/) folder.
+- [Accessible Template Example In Use](templates-and-examples/latex/accessible-template-example-in-use.pdf): a full document built on the template, with headings, lists, tables, figures with alt text, equations, and decorative content (PDF 2.0, PDF/UA-2). [Download the source (.zip)](templates-and-examples/latex/accessible-template-example-in-use.zip): the LaTeX file and its images folder, ready to upload to Overleaf.
