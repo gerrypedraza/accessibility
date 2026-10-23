@@ -467,6 +467,100 @@
   /* Sub-bullets: smaller and tighter so the parent points stay dominant */
   .slide li > ul { font-size: 0.85em; margin: 0.25em 0 0; }
   .slide li li { margin-bottom: 0.2em; }
+
+  /* ---------- Additions for "Accessible Math in LaTeX and PDF" ----------
+     Layouts this deck needs that the template doesn't have yet. Same tokens,
+     so they can move into the shared template as is. */
+
+  /* Two or four text columns, each with an h3 */
+  .cols-2, .compare { flex: 1; display: grid; gap: 4%; min-height: 0; align-content: start; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .compare { grid-template-columns: repeat(4, 1fr); gap: 2.5%; }
+  .cols-2 h3, .compare h3 { margin: 0 0 0.5em; font-size: 1em; color: var(--accent); }
+  .cols-2 ul { font-size: 0.9em; }
+  .compare > div { border-top: 0.2em solid var(--accent); padding-top: 0.6em; }
+  .compare ul { font-size: 0.6em; margin-bottom: 0.5em; }
+  .compare li { margin-bottom: 0.3em; }
+  .compare h3 { font-size: 0.9em; }
+  .compare .compare-label {
+    font-size: 0.62em; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); margin: 0 0 0.3em;
+  }
+
+  /* Split with a wider text column (e.g. text + QR code) */
+  .split--wide-text { grid-template-columns: 3fr 2fr; }
+  .split--wide-text ol, .split--wide-text > .split-text > ul { font-size: 0.9em; }
+  .qr-figure { flex-direction: column; text-align: center; }
+  .slide .qr-figure img { width: 70%; height: auto; max-height: 70%; }
+  .qr-figure figcaption { font-size: 0.6em; }
+
+  /* Data tables: header row in maroon, group rows in sand */
+  .data-table { border-collapse: collapse; width: 100%; font-size: 0.66em; }
+  .data-table th, .data-table td {
+    text-align: left; padding: 0.35em 0.7em; border-bottom: 1px solid var(--gray-200);
+  }
+  .data-table thead th { background: var(--accent); color: #ffffff; }
+  .data-table tbody th { font-weight: 600; }
+  .data-table tr.group th {
+    background: var(--accent-soft); color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em;
+  }
+  .data-table--compare { font-size: 0.75em; }
+  .data-table--dense { font-size: 0.58em; }
+  .data-table--dense th, .data-table--dense td { padding: 0.25em 0.7em; }
+  .data-table--compare td { text-align: center; }
+
+  /* Comparison matrix: row headers left, one column per option */
+  .data-table--matrix { font-size: 0.56em; table-layout: fixed; }
+  .data-table--matrix th, .data-table--matrix td { vertical-align: top; padding: 0.32em 0.6em; }
+  .data-table--matrix thead th:first-child { width: 19%; }
+
+  /* Three screenshot panels with captions */
+  .tag-panels { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3%; min-height: 0; }
+  .tag-panels figure { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+  .tag-panels .placeholder { flex: 1; min-height: 0; align-self: stretch; font-size: 0.6em; }
+  .tag-panels img { flex: 1; min-height: 0; width: 100%; object-fit: contain; }
+  .tag-panels figcaption { margin-top: 0.4em; font-size: 0.66em; font-weight: 600; color: var(--ink); text-align: center; }
+
+  /* Small note under slide content, above the footer */
+  .slide-note { font-size: 0.55em; color: var(--muted); margin: 0.8em 0 1.2em; }
+
+  /* Matrix cells with several short points */
+  .data-table--matrix td p { margin: 0 0 0.35em; }
+  .data-table--matrix tbody th { background: var(--accent-soft); color: var(--accent); }
+  .data-table--matrix thead td { background: transparent; border-bottom-color: transparent; }
+
+  /* Example + evaluation: screenshot left, verdict right */
+  .split--evaluate { grid-template-columns: 3fr 2fr; }
+  .split--evaluate .split-media img { border: 1px solid var(--gray-200); box-shadow: 0 0.15em 0.6em rgba(0,0,0,0.15); width: auto; max-width: 100%; height: auto; max-height: 100%; }
+  .eval-label {
+    font-size: 0.6em; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 0.3em;
+  }
+  .eval-example { font-size: 1.05em; font-weight: 700; margin: 0 0 1.4em; }
+  .eval { display: flex; align-items: center; gap: 0.5em; font-size: 1.15em; font-weight: 700; margin: 0; }
+  .eval-icon {
+    flex: none; width: 1.6em; height: 1.6em; border-radius: 50%;
+    display: grid; place-items: center; color: #ffffff; font-size: 0.85em;
+  }
+  .eval--pass { color: #1e6b2a; }          /* 6.6:1 on white */
+  .eval--pass .eval-icon { background: #1e6b2a; }
+  .eval--fail { color: #a4161a; }          /* 7.0:1 on white */
+  .eval--fail .eval-icon { background: #a4161a; }
+
+  /* Long titles that should stay on one line */
+  .slide--long-title h2 { font-size: 1.5em; }
+  /* Dense comparison matrix slide */
+  .slide--matrix h2 { margin-bottom: 0.4em; }
+  .slide--matrix .data-table--matrix { font-size: 0.43em; line-height: 1.3; }
+  .slide--matrix .data-table--matrix tbody th { width: 14%; }
+  .slide--matrix .data-table--matrix thead th:nth-child(4) { width: 27%; }
+  .slide--matrix .data-table--matrix th, .slide--matrix .data-table--matrix td { padding: 0.3em 0.55em; }
+  .slide--matrix .data-table--matrix thead th { font-size: 1.2em; }
+  .slide--matrix .data-table--matrix tbody th { font-size: 1.1em; }
+
+  /* Pitfalls slide: long bullets; keep them clear of the footer */
+  section[aria-labelledby="ct08"] ul { font-size: 0.8em; }
   /* ---------- Controls ---------- */
   .controls {
     position: fixed; right: 1rem; top: 1rem;   /* top right: empty on every layout */
@@ -565,423 +659,252 @@
   </section>
 
   <!-- [02] -->
-  <section class="slide slide--dense" aria-labelledby="s02">
-    <h2 id="s02">Objectives</h2>
+  <section class="slide" aria-labelledby="s02">
+    <h2 id="s02">The Green Check</h2>
+    <div class="split">
+      <div class="split-text">
     <ul>
-      <li>Explain what accessibility means for distributed course media and why it is required</li>
-      <li>Identify the purpose of the building blocks of an accessible document: headings, reading order, alt text, tables and equations</li>
-      <li>Explain why PDFs, and LaTeX-created files in particular, are harder to make accessible, and what PDF 2.0 changes</li>
-      <li>Analyze how accessibility checkers work: why a document can pass and still fail students, or be flagged when it is correct</li>
-      <li>Distinguish technical compliance from instructional design in documents and video</li>
+      <li>"I just need the green check mark."</li>
+      <li>A score of 95% or higher feels like compliance</li>
+      <li>Fast, easy to use, measurable, a clear answer</li>
     </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Introduction</span></div>
+      </div>
+      <figure class="split-media">
+        <img src="images/part-5-checkers.jpg" alt="A professor sips coffee, pleased by a green All checks passed banner beside a document whose reading order is scrambled.">
+      </figure>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span></span></div>
   </section>
 
   <!-- [03] -->
-  <section class="slide slide--agenda" aria-labelledby="s03">
-    <h2 id="s03">Agenda</h2>
-    <ol>
-      <li><a href="#4">What Accessibility Is and Why It Matters</a></li>
-      <li><a href="#9">Standards for Accessible Media</a></li>
-      <li><a href="#13">Structure: What Makes a Document Accessible</a></li>
-      <li><a href="#15">Why Equations in PDFs Are Harder</a></li>
-      <li><a href="#19">What Checkers Can and Can't Do</a></li>
-      <li><a href="#28">Designing for Meaning</a></li>
-    </ol>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Agenda</span></div>
-  </section>
-
-  <!-- [04] -->
-  <section class="slide slide--chapter-image" aria-labelledby="s04">
-    <img class="bg" src="images/student-using-screen-reader.jpg" alt="">
-    <div class="chapter-content">
-      <p class="chapter-number">Part 1</p>
-      <h2 id="s04">What Accessibility Is and Why It Matters</h2>
-      <p class="chapter-lead">What we mean by accessibility, what the law asks, and how we get there.</p>
+  <section class="slide slide--bleed" aria-labelledby="s03">
+    <img class="bleed-image" src="images/background.jpg" alt="">
+    <div class="key-phrase">
+      <h2 id="s03">A green check mark isn't accessibility</h2>
     </div>
   </section>
 
-  <!-- [05] -->
-  <section class="slide" aria-labelledby="s05">
-    <h2 id="s05">What Is Accessibility?</h2>
+  <!-- [04] -->
+  <section class="slide" aria-labelledby="s04">
+    <h2 id="s04">What Checkers Can and Can't See</h2>
     <ul>
-      <li>The same information, through an equally effective experience, with comparable ease</li>
-      <li>Who it serves: blind and low-vision students, dyslexia, motor disabilities, deaf and hard of hearing, students on phones, students who never disclose, all of us</li>
+      <li>They look for elements: alt text, headings, tags</li>
+      <li>They can't tell whether those elements work for a student</li>
+      <li>Many are built on older standards: they miss real problems and flag correct work</li>
     </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span></span></div>
+  </section>
+
+  <!-- [05] -->
+  <section class="slide slide--bleed" aria-labelledby="s05">
+    <img class="bleed-image" src="images/background.jpg" alt="">
+    <div class="key-phrase">
+      <h2 id="s05">The same information, through an equally effective experience. Not a score. An experience.</h2>
+    </div>
   </section>
 
   <!-- [06] -->
   <section class="slide" aria-labelledby="s06">
-    <h2 id="s06">The Goal: Equal Access</h2>
+    <h2 id="s06">How We Get There</h2>
     <ul>
-      <li>ADA Title II: no one excluded from a public university's programs because of a disability</li>
-      <li>DOJ rule (April 2024) sets the technical bar: <a href="https://www.w3.org/TR/WCAG21/">WCAG 2.1 Level AA</a></li>
-      <li>Covers what we offer students online: web pages, documents, and videos</li>
-      <li>Deadline extended to April 26, 2027; requirements unchanged</li>
+      <li>Every digital file students receive must be accessible</li>
+      <li>Prepared where it's written: Word, PowerPoint, LaTeX</li>
+      <li>Delivered in a format students can use directly or with assistive technology, such as a screen reader</li>
     </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span></span></div>
   </section>
 
   <!-- [07] -->
   <section class="slide" aria-labelledby="s07">
-    <h2 id="s07">How We Get There: Every Document Must Be Prepared</h2>
+    <h2 id="s07">How Do We Judge Accessibility? WCAG</h2>
     <ul>
-      <li>Word, PowerPoint, PDF, LaTeX, and video: accessibility is built in while authoring, not added at the end</li>
-      <li>Accommodation is reactive and individual; accessibility is proactive and benefits everyone</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
-  </section>
-
-  <!-- [08] -->
-  <section class="slide slide--image" aria-labelledby="s08">
-    <h2 id="s08">Three Layers: Standards, Structure, Design</h2>
-      <figure class="full-figure">
-        <img src="images/three-layers.svg" alt="Standards contain the document structure; design sits outside the standards and shapes that structure.">
-      </figure>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 1</span></div>
-  </section>
-
-  <!-- [09] -->
-  <section class="slide slide--chapter-image" aria-labelledby="s09">
-    <img class="bg" src="images/part-2-standards.jpg" alt="">
-    <div class="chapter-content">
-      <p class="chapter-number">Part 2</p>
-      <h2 id="s09">Standards for Accessible Media</h2>
-      <p class="chapter-lead">What the standards ask of web pages, documents, and video, and where to do the work.</p>
-    </div>
-  </section>
-
-  <!-- [10] -->
-  <section class="slide" aria-labelledby="s10">
-    <h2 id="s10">WCAG: The Measuring Stick</h2>
-    <ul>
-      <li>Perceivable: can they get the content? (a graph has alt text; a video has captions)</li>
-      <li>Operable: can they move through it? (jump by headings, use only a keyboard)</li>
-      <li>Understandable: does it make sense? (clear headings, consistent layout, notation explained)</li>
-      <li>Robust: does it work with their tools? (real tags a screen reader can read)</li>
+      <li>Web Content Accessibility Guidelines: the international standard</li>
+      <li>The Department of Justice requires <a href="https://www.w3.org/TR/WCAG21/">WCAG 2.1 Level AA</a></li>
+      <li>Despite "Web," it applies to documents and video too</li>
     </ul>
     <div class="info-banner" role="note">
       <span class="info-icon" aria-hidden="true">i</span>
       <p><a href="https://www.w3.org/TR/WCAG21/">WCAG 2.1 details on the W3C website</a></p>
     </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 2</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span></span></div>
   </section>
 
-  <!-- [11] -->
-  <section class="slide" aria-labelledby="s11">
-    <h2 id="s11">Document Standards: <br>How a PDF Meets WCAG</h2>
+  <!-- [08] -->
+  <section class="slide" aria-labelledby="s08">
+    <h2 id="s08">Four Principles, Four Questions</h2>
     <ul>
-      <li>WCAG says what a student must be able to do; PDF/UA (Universal Accessibility) says how a PDF makes it possible</li>
-      <li>PDF/UA-1 builds on PDF 1.7; PDF/UA-2 builds on PDF 2.0
-        <ul>
-          <li>PDF 2.0 is the file format: it makes accessibility possible but doesn't require it</li>
-          <li>PDF/UA-2 is the rulebook: tags, alt text, a title, and a language are required</li>
-          <li>A PDF 2.0 file isn't automatically PDF/UA-2: the materials are not the building code</li>
-        </ul>
-      </li>
+      <li>Perceivable: can I get the content?</li>
+      <li>Operable: can I move through it?</li>
+      <li>Understandable: does it make sense?</li>
+      <li>Robust: does it work with my tools?</li>
     </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 2</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span></span></div>
   </section>
 
-  <!-- [12] -->
-  <section class="slide" aria-labelledby="s12">
-    <h2 id="s12">Design the Source, Don't Patch the PDF</h2>
+  <!-- [09] -->
+  <section class="slide" aria-labelledby="s09">
+    <h2 id="s09">Design the Source, Don't Patch the PDF</h2>
     <ul>
-      <li>Accessibility is decided when you write the Word, PowerPoint, or LaTeX file</li>
-      <li>Fixing a finished PDF is slow, and every fix is lost when you re-export</li>
-      <li>Ally creates alternative formats but never changes your original file</li>
-      <li>The same inaccessible file carries into every future semester</li>
-      <li>Fix it once in the source, and it stays fixed</li>
+      <li>Fixing at the source is faster, and the fix lasts</li>
+      <li>Fixing in Acrobat is slow, except for small errors</li>
+      <li>Ally and other checkers offer quick fixes, but they are a patch, an overlay</li>
+      <li>Patches must be repeated every time the course is taught</li>
     </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 2</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span></span></div>
   </section>
 
-  <!-- [13] -->
-  <section class="slide slide--chapter-image" aria-labelledby="s13">
-    <img class="bg" src="images/part-3-structure.jpg" alt="">
-    <div class="chapter-content">
-      <p class="chapter-number">Part 3</p>
-      <h2 id="s13">Structure: What Makes a Document Accessible</h2>
-      <p class="chapter-lead">The building blocks that let assistive technology read a document.</p>
+  <!-- [10] -->
+  <section class="slide slide--chapter" aria-labelledby="s10">
+    <h2 id="s10">In the Trenches</h2>
+      <p class="chapter-lead">How all of this looks when we put it into practice, with Christine Roach</p>
+  </section>
+
+  <!-- [In the Trenches 01] -->
+  <section class="slide slide--matrix" aria-labelledby="ct01">
+    <h2 id="ct01">Comparing Formats</h2>
+    <table class="data-table data-table--matrix">
+      <caption class="visually-hidden">Comparison of HTML, Word, PDF from LaTeX and PDF from Word for math content</caption>
+      <thead>
+        <tr><td></td><th scope="col">HTML</th><th scope="col">Word document</th><th scope="col">PDF from LaTeX</th><th scope="col">PDF from Word</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Math Accessibility</th>
+          <td>Highly Accessible</td>
+          <td>Highly Accessible</td>
+          <td><p>Highly Accessible</p><p>Complies with newer, more advanced PDF/UA-2 accessibility standard</p></td>
+          <td>Accessible when exported correctly</td></tr>
+        <tr><th scope="row">Visual Fidelity</th>
+          <td>Loss of formatting in conversion, Potential issues with equation and table spacing and size</td>
+          <td><p>Limited formatting, difficult to achieve clean LaTeX look</p><p>File may look different on different machines</p><p>Equation formatting not as sophisticated or clean as LaTeX</p></td>
+          <td>Preserves LaTeX typesetting quality and features</td>
+          <td></td></tr>
+        <tr><th scope="row">Manual Intervention Required</th>
+          <td>Manual fixes required for full accessibility (headers, alt text, etc.)</td>
+          <td>Manual fixes required for full accessibility (styles, alt text, etc), and are easy to achieve</td>
+          <td><p>Requires manual accessibility fixes in .tex file, including adding commands and text for alt text, table headers, reading order etc.</p><p>This method is still developing and some packages or commands may not be supported yet.</p></td>
+          <td>Fix source file before exporting to PDF</td></tr>
+        <tr><th scope="row">Other Considerations</th>
+          <td><p>Canvas sanitizes HTML which can further degrade results</p><p>Conversion methods vary in difficulty and output quality</p></td>
+          <td></td>
+          <td>Will generate false positive accessibility errors in Ally (image with no description).</td>
+          <td>Use only the native “Save As” function to export to PDF from Word or PowerPoint. Do not use Save as Adobe PDF or PDFMaker</td></tr>
+      </tbody>
+    </table>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Formats</span></div>
+  </section>
+
+  <!-- [In the Trenches 02] -->
+  <section class="slide" aria-labelledby="ct02">
+    <h2 id="ct02">How to Produce Accessible PDFs <br>from LaTeX</h2>
+    <div class="split split--wide-text">
+      <div class="split-text">
+    <ol>
+      <li>Use latest LaTeX release and LuaLaTeX engine.</li>
+      <li>Add <code>\DocumentMetadata{...}</code> before <code>\documentclass</code></li>
+      <li>Check packages against the tagging status list</li>
+      <li>Images: <code>alt={...}</code>, or <code>artifact</code> if decorative</li>
+      <li>See full details at the LaTeX Project</li>
+    </ol>
+      </div>
+      <figure class="split-media qr-figure">
+        <img src="images/qr-latex-usage-instructions.svg" alt="QR code linking to the LaTeX Tagging Project usage instructions.">
+        <figcaption>Full instructions from the LaTeX Project:<br><a href="https://latex3.github.io/tagging-project/documentation/usage-instructions">latex3.github.io/tagging-project</a></figcaption>
+      </figure>
     </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>LaTeX</span></div>
   </section>
 
-  <!-- [14] -->
-  <section class="slide" aria-labelledby="s14">
-    <h2 id="s14">The Building Blocks</h2>
+  <!-- [In the Trenches 03] -->
+  <section class="slide slide--long-title" aria-labelledby="ct03">
+    <h2 id="ct03">PDF Math Quick Check – Look for the &lt;Formula&gt; tag</h2>
     <div class="split">
       <div class="split-text">
-    <ul>
-      <li>Headings in a logical hierarchy</li>
-      <li>Reading order that matches the meaning</li>
-      <li>Real lists and tables with header cells</li>
-      <li>Alt text for images; artifacts for decoration</li>
-      <li>Equations as MathML, not pictures</li>
-    </ul>
+        <p>When assessing PDF files, open the accessibility tag tree in Acrobat and look for the &lt;Formula&gt; tag. Modern accessible documents will use the &lt;Formula&gt; tag, either with autogenerated alt text in the tag properties, or with nested MathML tags.</p>
       </div>
       <figure class="split-media">
-        <img src="images/building-blocks.svg" alt="A math handout with each part tagged: H1, H2, list, formula as MathML, table with headers, figure with alt text, artifact.">
+        <img src="images/formula-check.svg" alt="A Formula tag contains either nested MathML tags or alt text in its tag properties.">
       </figure>
     </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 3</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>PDF Quick Check</span></div>
   </section>
 
-  <!-- [15] -->
-  <section class="slide slide--chapter-image" aria-labelledby="s15">
-    <img class="bg" src="images/part-4-equations.jpg" alt="">
-    <div class="chapter-content">
-      <p class="chapter-number">Part 4</p>
-      <h2 id="s15">Why Equations in PDFs Are Harder</h2>
-      <p class="chapter-lead">What makes math hard to read in a PDF, and what PDF 2.0 and LaTeX change.</p>
-    </div>
-  </section>
-
-  <!-- [16] -->
-  <section class="slide" aria-labelledby="s16">
-    <h2 id="s16">PDF Was Built for Print</h2>
-    <div class="split">
-      <div class="split-text">
-    <ul>
-      <li>PDF describes where ink goes on a page; structure was added later through tags</li>
-      <li>PDF 2.0 rebuilt that structure, which is what makes real math possible</li>
-    </ul>
-      </div>
+  <!-- [In the Trenches 04] -->
+  <section class="slide slide--long-title" aria-labelledby="ct04">
+    <h2 id="ct04">PDF Math – Look for the &lt;Formula&gt; tag</h2>
+    <div class="split split--evaluate">
       <figure class="split-media">
-        <img src="images/print-vs-structure.svg" alt="The same math handout twice: as printed ink, then as tags that label each part and number the reading order.">
+        <img src="images/tags-formula-alt-text.png" alt="Acrobat Object Properties for a Formula tag, with generated alternate text describing the equations.">
       </figure>
-    </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 4</span></div>
-  </section>
-
-  <!-- [17] -->
-  <section class="slide" aria-labelledby="s17">
-    <h2 id="s17">Equations: Pictures or Structure</h2>
-    <ul>
-      <li>As a picture with alt text: one flat sentence, nothing to navigate</li>
-      <li>As MathML: read and navigate term by term, in speech or braille</li>
-      <li>PDF/UA-2 requires math as MathML; PDF/UA-1 only allowed alt text</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 4</span></div>
-  </section>
-
-  <!-- [18] -->
-  <section class="slide" aria-labelledby="s18">
-    <h2 id="s18">LaTeX: A Preamble Makes the Difference</h2>
-    <ul>
-      <li>LaTeX output is a PDF, so it inherits PDF's challenges</li>
-      <li>A preamble based on the LaTeX Tagging Project turns on the tags assistive technology uses</li>
-      <li>Template available in the resources at the end</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 4</span></div>
-  </section>
-
-  <!-- [19] -->
-  <section class="slide slide--chapter-image chapter--narrow" aria-labelledby="s19">
-    <img class="bg" src="images/part-5-checkers.jpg" alt="">
-    <div class="chapter-content">
-      <p class="chapter-number">Part 5</p>
-      <h2 id="s19">What Checkers Can and Can't Do</h2>
-      <p class="chapter-lead">What automated checkers can confirm, and what only a person can judge.</p>
-    </div>
-  </section>
-
-  <!-- [20] -->
-  <section class="slide" aria-labelledby="s20">
-    <h2 id="s20">How Checkers Work</h2>
-    <div class="split">
       <div class="split-text">
-    <ul>
-      <li>They find items and test them against rules</li>
-      <li>They can tell that alt text exists, not whether it is useful</li>
-    </ul>
+        <p class="eval-label">Example</p>
+        <p class="eval-example">Formula tag with Alt Text visible in properties.</p>
+        <p class="eval-label">Evaluation</p>
+        <p class="eval eval--pass"><span class="eval-icon" aria-hidden="true">✓</span>Accessible</p>
       </div>
-      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>a robot ticking boxes on a checklist</div>
     </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>PDF Quick Check</span></div>
   </section>
 
-  <!-- [21] -->
-  <section class="slide" aria-labelledby="s21">
-    <h2 id="s21">Checkers and PDF 2.0</h2>
-    <ul>
-      <li>Ally, Panorama and Acrobat do not fully support PDF 2.0 / UA-2 (vendor-confirmed)</li>
-      <li>Result: false flags in both directions</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
-  </section>
-
-  <!-- [22] -->
-  <section class="slide" aria-labelledby="s22">
-    <h2 id="s22">Passes the Checker, Fails the Student: Reading Order</h2>
-    <div class="split">
-      <div class="split-text">
-    <ul>
-      <li>A PowerPoint exported to PDF: every element tagged, read in the wrong sequence</li>
-    </ul>
-      </div>
-      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>a slide with numbered arrows jumping around</div>
-    </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
-  </section>
-
-  <!-- [23] -->
-  <section class="slide" aria-labelledby="s23">
-    <h2 id="s23">Passes the Checker, Fails the Student: Headings</h2>
-    <div class="split">
-      <div class="split-text">
-    <ul>
-      <li>A Word document jumping from Heading 1 to Heading 3 misleads users about the hierarchy</li>
-    </ul>
-      </div>
-      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>a staircase with a missing step</div>
-    </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
-  </section>
-
-  <!-- [24] -->
-  <section class="slide" aria-labelledby="s24">
-    <h2 id="s24">Passes the Checker, Fails the Student: Alt Text</h2>
-    <ul>
-      <li>"A parabola": present, passing, and empty of instructional value</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
-  </section>
-
-  <!-- [25] -->
-  <section class="slide" aria-labelledby="s25">
-    <h2 id="s25">Fails the Checker, Serves the Student: PDF 2.0</h2>
-    <ul>
-      <li>A correct PDF/UA-2 document with MathML flagged as missing alt text</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
-  </section>
-
-  <!-- [26] -->
-  <section class="slide slide--example" aria-labelledby="s26">
-    <h2 id="s26">Example: Acrobat Flags a Correct Caption</h2>
-      <figure class="example-figure">
-        <img src="images/acrobat-lbl-caption-check.png" alt="Acrobat&#x27;s checker marks Lbl and LBody as failed for the caption label &quot;Fig. 2:&quot; under a diagram.">
+  <!-- [In the Trenches 05] -->
+  <section class="slide slide--long-title" aria-labelledby="ct05">
+    <h2 id="ct05">PDF Math – Look for the &lt;Formula&gt; tag</h2>
+    <div class="split split--evaluate">
+      <figure class="split-media">
+        <img src="images/tags-no-formula.png" alt="Acrobat tag tree: equations sit inside a P tag as plain text fragments, with no Formula tag.">
       </figure>
-    <div class="example-note">
-      <p>Acrobat's "Lbl and LBody" check expects a label only inside a list item, such as "1." or a bullet.</p>
-      <p>In this PDF 2.0 file, "Fig. 2:" is tagged as the label of its caption, which PDF 2.0 allows. A screen reader can tell the figure number apart from the caption text.</p>
-      <p>Acrobat's checker does not support PDF/UA-2, so it judges the file by older rules. The tagging is correct; the check is not.</p>
-    </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 5</span></div>
-  </section>
-
-  <!-- [27] -->
-  <section class="slide slide--bleed" aria-labelledby="s27">
-    <img class="bleed-image" src="images/background.jpg" alt="">
-    <div class="key-phrase">
-      <h2 id="s27">A checker can tell you it's tagged, not that it makes sense</h2>
-    </div>
-  </section>
-
-  <!-- [28] -->
-  <section class="slide slide--chapter-image chapter--narrow" aria-labelledby="s28">
-    <img class="bg" src="images/part-6-meaning.jpg" alt="">
-    <div class="chapter-content">
-      <p class="chapter-number">Part 6</p>
-      <h2 id="s28">Designing for Meaning</h2>
-      <p class="chapter-lead">Alt text, descriptions, and captions that convey the class content, not just compliance with standards.</p>
-    </div>
-  </section>
-
-  <!-- [29] -->
-  <section class="slide" aria-labelledby="s29">
-    <h2 id="s29">Alt Text That Teaches</h2>
-    <div class="split">
       <div class="split-text">
-    <ul>
-      <li>"A parabola" vs. "the vertex at (2, -1) is the minimum, which is the point of this example"</li>
-    </ul>
+        <p class="eval-label">Example</p>
+        <p class="eval-example">Math with no &lt;Formula&gt; tag.</p>
+        <p class="eval-label">Evaluation</p>
+        <p class="eval eval--fail"><span class="eval-icon" aria-hidden="true">✕</span>Inaccessible</p>
       </div>
-      <div class="placeholder" role="note" aria-label="Planned image"><span class="placeholder-label">Planned image</span>the same parabola with two captions side by side</div>
     </div>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>PDF Quick Check</span></div>
   </section>
 
-  <!-- [30] -->
-  <section class="slide" aria-labelledby="s30">
-    <h2 id="s30">Short Alt Text, Detailed Extended Description</h2>
-    <ul>
-      <li>Keep alt text to about 120-150 characters; screen readers read it in one go</li>
-      <li>Put details in a linked extended description; a tagged data table for charts</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
-  </section>
-
-  <!-- [31] -->
-  <section class="slide" aria-labelledby="s31">
-    <h2 id="s31">Video: Captions and Description</h2>
-    <ul>
-      <li>Accurate captions: review auto-captions, especially math and technical terms</li>
-      <li>Gold standard: a dedicated audio description track, written and voiced by trained describers</li>
-      <li>Practical path: describe as you go; it is a skill that takes practice, and it can meet the requirement</li>
-      <li>Say what is on screen and why it matters: replace "as you can see here" with the instructional point</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
-  </section>
-
-  <!-- [32] -->
-  <section class="slide" aria-labelledby="s32">
-    <h2 id="s32">Video: On-Screen Content</h2>
-    <ul>
-      <li>On-screen text: large (about 24 pt or more), high contrast, clear of the caption area</li>
-      <li>Complex content (tables, charts, reference data): provide an accessible version as an attachment, and mention it aloud</li>
-      <li>A textbook page reference works only if the student has an accessible copy</li>
-      <li>Still say the key takeaway aloud</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Part 6</span></div>
-  </section>
-
-  <!-- [33] -->
-  <section class="slide slide--bleed" aria-labelledby="s33">
-    <img class="bleed-image" src="images/background.jpg" alt="">
-    <div class="key-phrase">
-      <h2 id="s33">Tags make content reachable; design makes it meaningful</h2>
+  <!-- [In the Trenches 06] -->
+  <section class="slide slide--long-title" aria-labelledby="ct06">
+    <h2 id="ct06">PDF Math – Look for the &lt;Formula&gt; tag</h2>
+    <div class="split split--evaluate">
+      <figure class="split-media">
+        <img src="images/tags-formula-mathml.png" alt="Acrobat tag tree: a Formula tag containing nested MathML tags such as math, msup, mi, mrow and mo.">
+      </figure>
+      <div class="split-text">
+        <p class="eval-label">Example</p>
+        <p class="eval-example">Formula tag with Nested MathML tags</p>
+        <p class="eval-label">Evaluation</p>
+        <p class="eval eval--pass"><span class="eval-icon" aria-hidden="true">✓</span>Accessible</p>
+      </div>
     </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>PDF Quick Check</span></div>
   </section>
 
-  <!-- [34] -->
-  <section class="slide" aria-labelledby="s34">
-    <h2 id="s34">Where to Start</h2>
+  <!-- [In the Trenches 07] -->
+  <section class="slide slide--long-title" aria-labelledby="ct07">
+    <h2 id="ct07">PDF Math – Look for the &lt;Formula&gt; tag</h2>
+    <div class="split split--evaluate">
+      <figure class="split-media">
+        <img src="images/tags-figure-no-alt.png" alt="Acrobat tag tree: an equation tagged as a Figure, with no alternate text.">
+      </figure>
+      <div class="split-text">
+        <p class="eval-label">Example</p>
+        <p class="eval-example">Math present as figure, figure has no alt text</p>
+        <p class="eval-label">Evaluation</p>
+        <p class="eval eval--fail"><span class="eval-icon" aria-hidden="true">✕</span>Inaccessible</p>
+      </div>
+    </div>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>PDF Quick Check</span></div>
+  </section>
+
+  <!-- [In the Trenches 08] -->
+  <section class="slide slide--dense" aria-labelledby="ct08">
+    <h2 id="ct08">Three Math Accessibility Pitfalls to Watch For</h2>
     <ul>
-      <li>New and active course materials first, then syllabi and frequently used documents</li>
-      <li>Check with a screen reader, not only a checker</li>
+      <li><strong>Never autotag a PDF that has math:</strong> Acrobat discards the existing tags and re-tags from the page layout, which deletes the math tags and leaves equations unreadable to screen readers.</li>
+      <li><strong>Use Word’s built-in File &gt; Save As &gt; PDF,</strong> not the Acrobat ribbon tab or the “Save as Adobe PDF” option that Acrobat adds to Word. The Adobe route strips the math so screen readers can’t read it, even though Ally and Panorama score both exports the same.</li>
+      <li><strong>Ally falsely flags correctly tagged MathML in PDF/UA-2 files</strong> because it doesn’t support PDF 2.0 yet. You can work around it by setting <code>pdfversion=1.7</code> and <code>pdfstandard=ua-1</code> in <code>\DocumentMetadata</code>.</li>
     </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
-  </section>
-
-  <!-- [35] -->
-  <section class="slide slide--conclusion" aria-labelledby="s35">
-    <h2 id="s35">Conclusion</h2>
-    <ul>
-      <li>Accessibility is prepared, not patched</li>
-      <li>Checkers find items; people judge meaning</li>
-      <li>Design for the student, not the score</li>
-    </ul>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
-  </section>
-
-  <!-- [36] -->
-  <section class="slide slide--contact" aria-labelledby="s36">
-    <h2 id="s36">Resources and Contact</h2>
-    <dl>
-      <dt>Beamer to LTX Converter</dt>
-      <dd><a href="https://beam2ltx.gerrypedraza.com/">beam2ltx.gerrypedraza.com</a></dd>
-      <dt>LaTeX Tagging Project</dt>
-      <dd><a href="https://latex3.github.io/tagging-project/">latex3.github.io/tagging-project</a></dd>
-    </dl>
-    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Closing</span></div>
-  </section>
-
-  <!-- [37] -->
-  <section class="slide slide--thanks" aria-labelledby="s37">
-    <h2 id="s37">Thank You</h2>
-    <p>Questions?</p>
+    <div class="footer" aria-hidden="true"><span>Accessible Media: Beyond the Checker</span><span>Common Pitfalls</span></div>
   </section>
 
 </main>
@@ -1061,6 +984,8 @@
         <dd>The first version (ISO 14289-1), built on PDF 1.7. Most checkers test against it.</dd></div>
       <div class="term"><dt>PDF/UA-2</dt>
         <dd>The newer version (ISO 14289-2, 2024), built on PDF 2.0, with better support for math and modern structure. Many checkers do not support it yet.</dd></div>
+      <div class="term"><dt>Well-Tagged PDF (WTPDF)</dt>
+        <dd>A PDF Association specification (2024) for tagging PDF 2.0 files so their content can be reused: converted to HTML, reflowed on small screens, or read by assistive technology.</dd></div>
     </dl>
     <h3>Document structure</h3>
     <dl>
@@ -1084,6 +1009,8 @@
         <dd>Metadata that tells assistive technology what the document is called and what language to speak it in. A wrong language makes the screen reader mispronounce everything.</dd></div>
       <div class="term"><dt>Link text</dt>
         <dd>The words that are a link. They should say where the link goes ("WCAG 2.1 on the W3C website"), because screen reader users often list all links out of context; "click here" means nothing there.</dd></div>
+      <div class="term"><dt>Formula tag</dt>
+        <dd>The tag that marks math in a tagged PDF. To be readable, it must contain MathML (PDF 2.0) or alt text (PDF 1.7). Math tagged as a figure without alt text, or left untagged, can't be read by assistive technology.</dd></div>
     </dl>
     <h3>Math</h3>
     <dl>
@@ -1123,6 +1050,15 @@
         <dd>A free Windows tool from axes4 that checks PDFs against PDF/UA and WCAG and can preview the structure as a screen reader would meet it.</dd></div>
       <div class="term"><dt>veraPDF</dt>
         <dd>A free, open-source validator for PDF standards, including PDF/UA-1 and PDF/UA-2. It checks only the machine-verifiable rules.</dd></div>
+      <div class="term"><dt>Autotagging</dt>
+        <dd>Automatic tagging of a PDF from its visual layout, as in Acrobat's accessibility guided action. It replaces any existing tags, so on a tagged LaTeX PDF it removes the Formula tags and MathML.</dd></div>
+    </dl>
+    <h3>Conversion tools</h3>
+    <dl>
+      <div class="term"><dt>Mathpix</dt>
+        <dd>A commercial tool that recognizes math in screenshots, images and PDFs and converts it to LaTeX, Word or HTML. Snip handles single equations; document conversion handles whole files; the API handles batches. Proofread every result.</dd></div>
+      <div class="term"><dt>Pandoc</dt>
+        <dd>A free, open-source command-line converter between document formats, for example from a .tex file to Word or HTML. Complex macros may need cleanup.</dd></div>
     </dl>
     <h3>Video</h3>
     <dl>
