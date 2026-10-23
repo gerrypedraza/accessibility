@@ -1,6 +1,6 @@
 # Accessibility Resources
 
-Finished talks and materials on accessible course media, from the Engineering Studio for Advanced Instruction and Learning (eSAIL), Texas A&M University.
+Finished talks and materials on accessible course media.
 
 **View online:** https://gerrypedraza.github.io/accessibility/
 
