@@ -10,6 +10,10 @@ Finished talks and materials on accessible course media.
 
 The slides are plain HTML, built to be accessible: real headings and lists, alt text on every image, full keyboard control, and slide changes announced to screen readers.
 
+## Applications
+
+- [Beamer to LTX Converter](https://beam2ltx.gerrypedraza.com/): turns existing LaTeX Beamer slide decks into tagged, accessible PDF presentations by converting them to the ltx-talk class. Web app, currently in beta.
+
 ## Templates & Examples
 
 - [LaTeX Accessible Template](templates-and-examples/latex/latex-accessible-template.tex): a LaTeX preamble that produces a tagged PDF 2.0 file meeting PDF/UA-2, with equations stored as MathML. Start your document from it and compile with LuaLaTeX (on Overleaf, choose the Rolling TeX Live version).
